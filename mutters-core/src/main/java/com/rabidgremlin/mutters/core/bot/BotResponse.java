@@ -2,7 +2,6 @@ package com.rabidgremlin.mutters.core.bot;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class holds a response from a bot.
@@ -28,10 +27,7 @@ public class BotResponse
 
   /** List of suggested replies that the user could use. */
   private List<String> quickReplies;
-
-  /** Map of debug values. Added by particular bot implementation. */
-  private Map<String, Object> debugValues;
-
+ 
   /**
    * Constructor.
    * 
@@ -40,17 +36,15 @@ public class BotResponse
    * @param askResponse True if this the bot is expecting a further response from the user.
    * @param attachments The attachments for the response.
    * @param quickReplies List of suggested replies that the user could use.
-   * @param debugValues Map of debug values. Specific to bot implementation.
    */
   public BotResponse(String response, String hint, boolean askResponse,
-    List<BotResponseAttachment> attachments, List<String> quickReplies, Map<String, Object> debugValues)
+    List<BotResponseAttachment> attachments, List<String> quickReplies)
   {
     this.response = response;
     this.hint = hint;
     this.askResponse = askResponse;
     this.attachments = attachments;
     this.quickReplies = quickReplies;
-    this.debugValues = debugValues;
   }
 
   /**
@@ -99,22 +93,7 @@ public class BotResponse
   {
     return hint;
   }
-
-  /**
-   * Returns the debug values for this response.
-   * 
-   * @return The debug values or null.
-   */
-  public Map<String, Object> getDebugValues()
-  {
-    if (debugValues == null)
-    {
-      return null;
-    }
-
-    return Collections.unmodifiableMap(debugValues);
-  }
-
+  
   /**
    * Returns the quick replies for this response.
    * 

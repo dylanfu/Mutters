@@ -14,6 +14,8 @@ import com.rabidgremlin.mutters.core.Context;
 import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
+import com.rabidgremlin.mutters.core.MatcherScores;
+import com.rabidgremlin.mutters.core.NoIntentMatch;
 import com.rabidgremlin.mutters.core.Slot;
 import com.rabidgremlin.mutters.core.SlotMatch;
 import com.rabidgremlin.mutters.core.SlotMatcher;
@@ -106,25 +108,19 @@ public abstract class AbstractMachineLearningIntentMatcher
    * expectedIntents)
    */
   @Override
-  public IntentMatch match(String utterance, Context context, Set<String> expectedIntents, HashMap<String, Object> debugValues)
+  public IntentMatch match(String utterance, Context context, Set<String> expectedIntents)
   {
     // utterance is blank, nothing to match on
     if (StringUtils.isBlank(utterance))
     {
-      return null;
+      return new NoIntentMatch();
     }
 
     String[] utteranceTokens = tokenizer.tokenize(utterance);
 
     SortedMap<Double, Set<String>> scoredCats = generateSortedScoreMap(utteranceTokens);
     log.debug("Sorted scores were: {}", scoredCats);
-
-    // if we have a debugValues object then populate it with scores
-    if (debugValues != null)
-    {
-      debugValues.put(DEBUG_MATCHING_SCORES, scoredCats);
-    }
-
+    
     double bestScore = 0;
     String bestCategory = null;
     boolean hasMaybeIntent = false;
@@ -187,7 +183,7 @@ public abstract class AbstractMachineLearningIntentMatcher
       if (bestCategory == null)
       {
         log.debug("No matches, matching expectedIntents.");
-        return null;
+        return new NoIntentMatch(new MatcherScores(scoredCats));
       }
     }
 
@@ -198,7 +194,7 @@ public abstract class AbstractMachineLearningIntentMatcher
     if (bestIntent == null)
     {
       log.warn("Missing MLIntent named {}", bestCategory);
-      return null;
+      return new NoIntentMatch(new MatcherScores(scoredCats));
     }
 
     // are we below min score matching ?
@@ -240,12 +236,12 @@ public abstract class AbstractMachineLearningIntentMatcher
         else
         {
           log.debug("Score difference between best and next best too low. Skipping maybe intent");
-          return null;
+          return new NoIntentMatch(new MatcherScores(scoredCats));
         }
       }
       else
       {
-        return null;
+        return new NoIntentMatch(new MatcherScores(scoredCats));
       }
     }
 
@@ -253,7 +249,7 @@ public abstract class AbstractMachineLearningIntentMatcher
     HashMap<Slot, SlotMatch> matchedSlots = slotMatcher.match(context, bestIntent, utterance);
 
     // return best match
-    return new IntentMatch(bestIntent, matchedSlots, utterance);
+    return new IntentMatch(bestIntent, matchedSlots, utterance, new MatcherScores(scoredCats));
 
   }
 

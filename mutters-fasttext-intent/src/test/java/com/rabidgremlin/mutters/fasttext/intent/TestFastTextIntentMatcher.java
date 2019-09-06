@@ -52,7 +52,7 @@ public class TestFastTextIntentMatcher
   public void testMatchingOfPhraseInTestData()
   {
     Context context = new Context();
-    IntentMatch intentMatch =  intentMatcher.match("how hot is it", context, null, null);
+    IntentMatch intentMatch =  intentMatcher.match("how hot is it", context, null);
     
     assertThat(intentMatch, is(notNullValue()));
     
@@ -65,7 +65,7 @@ public class TestFastTextIntentMatcher
   public void testBasicMatching()
   {
     Context context = new Context();
-    IntentMatch intentMatch =  intentMatcher.match("will it rain tomorrow", context, null, null);
+    IntentMatch intentMatch =  intentMatcher.match("will it rain tomorrow", context, null);
     
     assertThat(intentMatch, is(notNullValue()));
     
@@ -78,7 +78,7 @@ public class TestFastTextIntentMatcher
   public void testNoMatch()
   {
     Context context = new Context();
-    IntentMatch intentMatch =  intentMatcher.match("the hovercraft is full of eels", context, null, null);
+    IntentMatch intentMatch =  intentMatcher.match("the hovercraft is full of eels", context, null);
     
     assertThat(intentMatch, is(nullValue()));
    

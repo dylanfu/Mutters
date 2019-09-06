@@ -24,6 +24,7 @@ import com.rabidgremlin.mutters.bot.ink.functions.SetHintFunction;
 import com.rabidgremlin.mutters.bot.ink.functions.SetLongTermAttributeFunction;
 import com.rabidgremlin.mutters.bot.ink.functions.SetRepromptFunction;
 import com.rabidgremlin.mutters.core.Context;
+import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
 import com.rabidgremlin.mutters.core.SlotMatch;
@@ -223,13 +224,11 @@ public abstract class InkBot<T extends InkBotConfiguration>
         expectedIntents.add(choice.getText());
       }
 
-      // create debug values map
-      HashMap<String, Object> debugValues = new HashMap<String, Object>();
-
+      
       // match the intents
-      IntentMatch intentMatch = matcher.match(messageText, context, expectedIntents, debugValues);
+      IntentMatch intentMatch = matcher.match(messageText, context, expectedIntents);
 
-      if (intentMatch != null)
+      if (intentMatch.getIntent() == Intent.NONE)
       {
         // record name of intent we matched on
         matchedIntent = intentMatch.getIntent().getName();
@@ -327,17 +326,12 @@ public abstract class InkBot<T extends InkBotConfiguration>
         session.reset();
         currentResponse.setAskResponse(false);
       }
-
-      // populate debug values map with matched intent
-      if (matchedIntent != null)
-      {
-        debugValues.put(DK_MATCHED_INTENT, matchedIntent);
-      }
+      
 
       // build and return response
       return new BotResponse(currentResponse.getResponseText(), currentResponse.getHint(), currentResponse.isAskResponse(),
           currentResponse.getResponseAttachments(),
-          currentResponse.getResponseQuickReplies(), debugValues);
+          currentResponse.getResponseQuickReplies());
     }
     catch (Exception e)
     {
