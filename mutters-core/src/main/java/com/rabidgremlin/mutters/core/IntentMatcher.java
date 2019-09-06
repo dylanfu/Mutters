@@ -24,6 +24,6 @@ public interface IntentMatcher
    * @param debugValues Map of debug values. Pass in null if no debug values required.
    * @return The best intent match or null if no good match.
    */
-  IntentMatch match(String utterance, Context context, Set<String> expectedIntents, HashMap<String, Object> debugValues);
+  IntentMatch match(String utterance, Context context, Set<String> expectedIntents);
 
 }
