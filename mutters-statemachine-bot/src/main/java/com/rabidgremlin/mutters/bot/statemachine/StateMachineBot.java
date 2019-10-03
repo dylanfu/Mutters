@@ -93,7 +93,6 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
       boolean askResponse = true;
 
       // TODO: Implement intent filtering via expected intents
-      // TODO: Implement debug values
       IntentMatch intentMatch = matcher.match(messageText, context, null);
 
       if (intentMatch.getIntent() != Intent.NONE)
