@@ -6,12 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.rabidgremlin.mutters.core.Context;
+import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
 import com.rabidgremlin.mutters.core.bot.Bot;
 import com.rabidgremlin.mutters.core.bot.BotException;
 import com.rabidgremlin.mutters.core.bot.BotResponse;
 import com.rabidgremlin.mutters.core.bot.BotResponseAttachment;
+import com.rabidgremlin.mutters.core.bot.IntentBot;
+import com.rabidgremlin.mutters.core.bot.IntentBotResponse;
 import com.rabidgremlin.mutters.core.session.Session;
 import com.rabidgremlin.mutters.core.util.SessionUtils;
 import com.rabidgremlin.mutters.state.IntentResponse;
@@ -25,7 +28,7 @@ import com.rabidgremlin.mutters.state.StateMachine;
  *
  */
 public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
-    implements Bot
+    implements IntentBot
 {
   /** Logger for the bot. */
   private Logger log = LoggerFactory.getLogger(StateMachineBot.class);
@@ -66,7 +69,7 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
    * com.rabidgremlin.mutters.core.Context, java.lang.String)
    */
   @Override
-  public BotResponse respond(Session session, Context context, String messageText)
+  public IntentBotResponse respond(Session session, Context context, String messageText)
     throws BotException
   {
     log.debug("session: {} context: {} messageText: {}",
@@ -91,9 +94,9 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
 
       // TODO: Implement intent filtering via expected intents
       // TODO: Implement debug values
-      IntentMatch intentMatch = matcher.match(messageText, context, null, null);
+      IntentMatch intentMatch = matcher.match(messageText, context, null);
 
-      if (intentMatch != null)
+      if (intentMatch.getIntent() != Intent.NONE)
       {
         IntentResponse response = stateMachine.trigger(intentMatch, session);
         responseText = response.getResponse();
@@ -122,7 +125,7 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
         }
       }
 
-      return new BotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies, null);
+      return new IntentBotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies, intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
     }
     catch (IllegalStateException e)
     {

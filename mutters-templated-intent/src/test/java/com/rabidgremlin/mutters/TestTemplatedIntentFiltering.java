@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.rabidgremlin.mutters.core.Context;
+import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.templated.SimpleTokenizer;
 import com.rabidgremlin.mutters.templated.TemplatedIntent;
@@ -42,14 +43,14 @@ public class TestTemplatedIntentFiltering
   public void testNoFiltering()
   {
     // should match on hello intent
-    IntentMatch intentMatch = matcher.match("hello", new Context(), null, null);
+    IntentMatch intentMatch = matcher.match("hello", new Context(), null);
 
     assertThat(intentMatch, is(notNullValue()));
     assertThat(intentMatch.getIntent(), is(notNullValue()));
     assertThat(intentMatch.getIntent().getName(), is("HelloIntent"));
     
     // should match on goodbye intent
-    intentMatch = matcher.match("bye", new Context(), null, null);
+    intentMatch = matcher.match("bye", new Context(), null);
 
     assertThat(intentMatch, is(notNullValue()));
     assertThat(intentMatch.getIntent(), is(notNullValue()));
@@ -63,15 +64,16 @@ public class TestTemplatedIntentFiltering
     expectedIntents.add("HelloIntent");
     
     // should match on hello intent
-    IntentMatch intentMatch = matcher.match("hello", new Context(), expectedIntents, null);
+    IntentMatch intentMatch = matcher.match("hello", new Context(), expectedIntents);
 
     assertThat(intentMatch, is(notNullValue()));
     assertThat(intentMatch.getIntent(), is(notNullValue()));
     assertThat(intentMatch.getIntent().getName(), is("HelloIntent"));
     
     // should not match on goodbye intent (its not in expected intents)
-    intentMatch = matcher.match("bye", new Context(), expectedIntents, null);
+    intentMatch = matcher.match("bye", new Context(), expectedIntents);
 
-    assertThat(intentMatch, is(nullValue()));    
+    assertThat(intentMatch,is(notNullValue()));
+    assertThat(intentMatch.getIntent(),is(Intent.NONE));   
   }
 }

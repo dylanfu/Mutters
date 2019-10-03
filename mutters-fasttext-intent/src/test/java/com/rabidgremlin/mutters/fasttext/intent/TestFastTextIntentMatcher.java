@@ -80,8 +80,8 @@ public class TestFastTextIntentMatcher
     Context context = new Context();
     IntentMatch intentMatch =  intentMatcher.match("the hovercraft is full of eels", context, null);
     
-    assertThat(intentMatch, is(nullValue()));
-   
+    assertThat(intentMatch,is(notNullValue()));
+    assertThat(intentMatch.getIntent(),is(Intent.NONE));   
   }
 
 }

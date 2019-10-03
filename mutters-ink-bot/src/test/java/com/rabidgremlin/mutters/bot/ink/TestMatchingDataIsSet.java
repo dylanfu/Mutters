@@ -13,15 +13,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.rabidgremlin.mutters.core.Context;
+import com.rabidgremlin.mutters.core.MatcherScores;
 import com.rabidgremlin.mutters.core.bot.BotException;
 import com.rabidgremlin.mutters.core.bot.BotResponse;
+import com.rabidgremlin.mutters.core.bot.IntentBotResponse;
 import com.rabidgremlin.mutters.core.session.Session;
 
 /**
- * Test that debug values are populated as expected by ink based bot.
+ * Test that matched intent name and matching scores are set 
  *
  */
-public class TestDebugValues
+public class TestMatchingDataIsSet
 {
   private static TaxiInkBot taxiBot;
 
@@ -38,18 +40,17 @@ public class TestDebugValues
     Session session = new Session();
     Context context = new Context();
 
-    BotResponse response = taxiBot.respond(session, context, "Send a taxi to 56 Kilm Steet");
+    IntentBotResponse response = taxiBot.respond(session, context, "Send a taxi to 56 Kilm Steet");
 
-    assertThat(response, is(notNullValue()));
-    Map<String, Object> debugValues = response.getDebugValues();
-    assertThat(debugValues, is(notNullValue()));
-    assertThat(debugValues.get(InkBot.DK_MATCHED_INTENT), is("OrderTaxi"));
+    assertThat(response, is(notNullValue()));   
+    assertThat(response.getMatchedIntent(), is(notNullValue()));
+    assertThat(response.getMatchedIntent(), is("OrderTaxi"));
 
-    @SuppressWarnings("unchecked")
-    SortedMap<Double, Set<String>> matchingScores = (SortedMap<Double, Set<String>>) debugValues.get(InkBot.DK_INTENT_MATCHING_SCORES);
+    
+    MatcherScores matchingScores = response.getMatchingScores();
 
     assertThat(matchingScores, is(notNullValue()));
-    Set<String> bestIntents = matchingScores.get(matchingScores.lastKey());
+    Set<String> bestIntents = matchingScores.getScores().get(matchingScores.getScores().lastKey());
     assertThat(bestIntents.size(), is(1));
     assertThat(bestIntents, hasItems("OrderTaxi"));
   }

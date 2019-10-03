@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import com.rabidgremlin.mutters.core.Context;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
+import com.rabidgremlin.mutters.core.MatcherScores;
+import com.rabidgremlin.mutters.core.NoIntentMatch;
 import com.rabidgremlin.mutters.core.Tokenizer;
 
 /**
@@ -64,12 +66,12 @@ public class TemplatedIntentMatcher
    * Set<String> expectedIntents)
    */
   @Override
-  public IntentMatch match(String utterance, Context context, Set<String> expectedIntents, HashMap<String, Object> debugValues)
+  public IntentMatch match(String utterance, Context context, Set<String> expectedIntents)
   {
     // utterance is blank, nothing to match on
     if (StringUtils.isBlank(utterance))
     {
-      return null;
+      return new NoIntentMatch();
     }
 
     String[] cleanedUtterance = tokenizer.tokenize(utterance);
@@ -77,7 +79,7 @@ public class TemplatedIntentMatcher
     // do we have some tokens after cleaning ?
     if (cleanedUtterance.length == 0)
     {
-      return null;
+      return new NoIntentMatch();
     }
 
     for (TemplatedIntent intent : intents)
@@ -88,12 +90,16 @@ public class TemplatedIntentMatcher
         TemplatedUtteranceMatch utteranceMatch = intent.matches(cleanedUtterance, context);
         if (utteranceMatch.isMatched())
         {
-          return new IntentMatch(intent, utteranceMatch.getSlotMatches(), utterance);
+          // if match with a templated match then the score is 100%	
+          MatcherScores scores = new MatcherScores();
+          scores.addScore(intent.getName(), 1.0);
+        	
+          return new IntentMatch(intent, utteranceMatch.getSlotMatches(), utterance, scores);
         }
       }
     }
 
-    return null;
+    return new NoIntentMatch();
   }
 
 }

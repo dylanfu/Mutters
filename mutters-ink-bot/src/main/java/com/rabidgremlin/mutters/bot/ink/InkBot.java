@@ -31,6 +31,8 @@ import com.rabidgremlin.mutters.core.SlotMatch;
 import com.rabidgremlin.mutters.core.bot.Bot;
 import com.rabidgremlin.mutters.core.bot.BotException;
 import com.rabidgremlin.mutters.core.bot.BotResponse;
+import com.rabidgremlin.mutters.core.bot.IntentBot;
+import com.rabidgremlin.mutters.core.bot.IntentBotResponse;
 import com.rabidgremlin.mutters.core.session.Session;
 
 /**
@@ -51,7 +53,7 @@ import com.rabidgremlin.mutters.core.session.Session;
  *
  */
 public abstract class InkBot<T extends InkBotConfiguration>
-    implements Bot
+    implements IntentBot
 {
   /** Logger for the bot. */
   private Logger log = LoggerFactory.getLogger(InkBot.class);
@@ -154,7 +156,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
    * com.rabidgremlin.mutters.core.Context, java.lang.String)
    */
   @Override
-  public BotResponse respond(Session session, Context context, String messageText)
+  public IntentBotResponse respond(Session session, Context context, String messageText)
     throws BotException
   {
     log.debug("===> \n session: {} context: {} messageText: {}",
@@ -228,7 +230,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
       // match the intents
       IntentMatch intentMatch = matcher.match(messageText, context, expectedIntents);
 
-      if (intentMatch.getIntent() == Intent.NONE)
+      if (intentMatch.getIntent() != Intent.NONE)
       {
         // record name of intent we matched on
         matchedIntent = intentMatch.getIntent().getName();
@@ -329,9 +331,9 @@ public abstract class InkBot<T extends InkBotConfiguration>
       
 
       // build and return response
-      return new BotResponse(currentResponse.getResponseText(), currentResponse.getHint(), currentResponse.isAskResponse(),
+      return new IntentBotResponse(currentResponse.getResponseText(), currentResponse.getHint(), currentResponse.isAskResponse(),
           currentResponse.getResponseAttachments(),
-          currentResponse.getResponseQuickReplies());
+          currentResponse.getResponseQuickReplies(),intentMatch.getIntent().getName(),intentMatch.getMatcherScores());
     }
     catch (Exception e)
     {
