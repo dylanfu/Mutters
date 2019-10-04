@@ -1,10 +1,12 @@
 package com.rabidgremlin.mutters.bot.ink;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDate;
 
 import com.bladecoder.ink.runtime.Story;
 
@@ -84,7 +86,7 @@ public final class StoryUtils
     {
       return LocalDate.parse(dateStr);
     }
-    catch (IllegalArgumentException e)
+    catch (DateTimeParseException e)
     {
       return null;
     }
@@ -108,11 +110,7 @@ public final class StoryUtils
 
     try
     {
-      if (boolVal.equals(1))
-      {
-        return true;
-      }
-      return false;
+      return boolVal.equals(1);
     }
     catch (IllegalArgumentException e)
     {
@@ -153,7 +151,7 @@ public final class StoryUtils
           .getResourceAsStream(inkJsonFileName);
 
       // replace seems to be a weird hack. as in example from blade-ink library
-      return IOUtils.toString(inkJsonStream, "UTF-8").replace('\uFEFF', ' ');
+      return IOUtils.toString(inkJsonStream, StandardCharsets.UTF_8).replace('\uFEFF', ' ');
     }
     catch (Exception e)
     {

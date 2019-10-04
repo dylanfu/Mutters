@@ -16,7 +16,6 @@ repositories {
 dependencies {
     compile project(':mutters-core')    
     
-    compile 'joda-time:joda-time:2.9.4' 
     compile 'com.joestelmach:natty:0.12'
     compile 'org.apache.commons:commons-lang3:3.4'
         

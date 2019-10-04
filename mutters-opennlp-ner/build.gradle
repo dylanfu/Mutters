@@ -21,7 +21,6 @@ dependencies {
     compile 'org.apache.opennlp:opennlp-tools:1.8.0'
     compile 'org.slf4j:slf4j-api:1.7.21'
     
-    //compile 'joda-time:joda-time:2.9.4' 
     //compile 'com.joestelmach:natty:0.12'
     //compile 'org.apache.commons:commons-lang3:3.4'
         
