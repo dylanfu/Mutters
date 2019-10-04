@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.rabidgremlin.mutters.bot.ink.DefaultResponseRepromptGenerator;
 import com.rabidgremlin.mutters.bot.ink.InkBotConfiguration;
 import com.rabidgremlin.mutters.bot.ink.InkBotFunction;
+import com.rabidgremlin.mutters.bot.ink.RepromptGenerator;
 import com.rabidgremlin.mutters.bot.ink.StoryUtils;
 import com.rabidgremlin.mutters.core.IntentMatcher;
 import com.rabidgremlin.mutters.templated.SimpleTokenizer;
@@ -67,11 +69,11 @@ public class OrderInkBotConfiguration
   {
     return null;
   }
-
+	 
   @Override
-  public List<String> getDefaultResponses()
-  {
-	  return Arrays.asList(new String[]{ "Sorry I didn't catch that." });
-  }
+  public RepromptGenerator getRepromptGenerator()
+  {	
+    return new DefaultResponseRepromptGenerator(new String[]{ "Sorry I didn't catch that." });
+  } 
 
 }

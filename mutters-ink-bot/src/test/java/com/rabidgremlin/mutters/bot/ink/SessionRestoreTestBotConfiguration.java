@@ -66,10 +66,9 @@ public class SessionRestoreTestBotConfiguration implements InkBotConfiguration
 	}
 
 	@Override
-	public List<String> getDefaultResponses()
-	{
-		// TODO Auto-generated method stub
-		return null;
+	public RepromptGenerator getRepromptGenerator()
+	{	
+		return new DefaultResponseRepromptGenerator();
 	}
 
 }

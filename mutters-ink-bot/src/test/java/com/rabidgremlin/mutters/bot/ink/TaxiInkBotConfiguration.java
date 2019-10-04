@@ -118,9 +118,9 @@ public class TaxiInkBotConfiguration
   }
 
   @Override
-  public List<String> getDefaultResponses()
-  {   
-    return null;
+  public RepromptGenerator getRepromptGenerator()
+  {	
+	return new DefaultResponseRepromptGenerator();
   }
 
 }

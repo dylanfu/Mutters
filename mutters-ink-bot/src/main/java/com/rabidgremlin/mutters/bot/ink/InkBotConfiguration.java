@@ -54,14 +54,6 @@ public interface InkBotConfiguration
   public ConfusedKnot getConfusedKnot();
 
   /**
-   * This method returns a list of default phrases for the bot to say when it fails to understand a user's utterance. A
-   * random default phrase will be picked. A default phrase will only be used if there is no current reprompt.
-   * 
-   * @return The list of default phrases or null if the bot doesn't have any custom default phrases.
-   */
-  public List<String> getDefaultResponses();
-
-  /**
    * Holder class for global intents.
    * 
    * @author rabidgremlin
@@ -122,4 +114,11 @@ public interface InkBotConfiguration
 
   }
 
+  /** 
+   * This should return a reprompt generator that will be sued by the bot to generate a reprompt if it doesn't understand what the user said. 
+   * This is only used if no reprompt has been defined by a SET_REPROMPT ink function.
+   * 
+   * @return The reprompt generator for the bot.
+   */
+  public RepromptGenerator getRepromptGenerator();
 }

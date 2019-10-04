@@ -63,24 +63,14 @@ public abstract class InkBot<T extends InkBotConfiguration>
 
   /** The ink JSON for the bot. */
   protected String inkStoryJson;
-
-  /** Default responses for when the bot cannot figure out what was said to it. */
-  protected String[] defaultResponses = { "Pardon?" };
+ 
 
   /** Map of InkBotFunctions the bot knows. */
   protected HashMap<String, InkBotFunction> inkBotFunctions = new HashMap<String, InkBotFunction>();
 
   /** Map of global intents for the bot. */
   protected HashMap<String, String> globalIntents = new HashMap<>();
-
-  /** Random for default reponses. */
-  private Random rand = new Random();
-
-  /** Debug value key for matched intent. */
-  public final static String DK_MATCHED_INTENT = "matchedIntent";
-
-  /** Debug value key for intent matching scores. */
-  public final static String DK_INTENT_MATCHING_SCORES = "intentMatchingScores";
+   
 
   /** The number of failed to understand attempts before bot is confused. */
   private int maxAttemptsBeforeConfused = -1;
@@ -90,6 +80,8 @@ public abstract class InkBot<T extends InkBotConfiguration>
 
   /** A thread local map that holds the story instance for each unique story JSON */
   private static ThreadLocal<Map<String, Story>> threadLocalStoryMap = ThreadLocal.withInitial(HashMap::new);
+  
+  private RepromptGenerator repromptGenerator = null;
 
   /**
    * Constructs the bot.
@@ -104,6 +96,9 @@ public abstract class InkBot<T extends InkBotConfiguration>
 
     // get the story json
     inkStoryJson = configuration.getStoryJson();
+    
+    // get reprompt generator
+    repromptGenerator = configuration.getRepromptGenerator();
 
     // Add default functions
     addFunction(new SetHintFunction());
@@ -140,13 +135,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
     {
       setConfusedKnot(confusedKnot.getMaxAttemptsBeforeConfused(), confusedKnot.getConfusedKnotName());
     }
-
-    // set up default phrases if supplied
-    List<String> defaultResponses = configuration.getDefaultResponses();
-    if (defaultResponses != null)
-    {
-      setDefaultResponses(defaultResponses.toArray(new String[0]));
-    }
+    
   }
 
   /*
@@ -163,16 +152,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
         new Object[]{ session, context, messageText });
 
     CurrentResponse currentResponse = new CurrentResponse();
-
-    // choose a default response
-    String defaultResponse = defaultResponses[rand.nextInt(defaultResponses.length)];
-
-    // set up default response in case bot has issue processing input
-    currentResponse.setResponseText(SessionUtils.getReprompt(session));
-    if (currentResponse.getResponseText() == null)
-    {
-      currentResponse.setResponseText(defaultResponse);
-    }
+   
    
     // preserve hint if we had reprompt hint
     currentResponse.setHint(SessionUtils.getRepromptHint(session));
@@ -284,7 +264,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
           // reset failed count
           failedToUnderstandCount = 0;
 
-          setRepromptInSession(currentResponse, session, defaultResponse);
+          setRepromptInSession(currentResponse, session);
         }
         else
         {
@@ -312,7 +292,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
         // reset failed count
         failedToUnderstandCount = 0;
         
-        setRepromptInSession(currentResponse, session, defaultResponse);
+        setRepromptInSession(currentResponse, session);
       }
 
       // save failed count
@@ -329,6 +309,28 @@ public abstract class InkBot<T extends InkBotConfiguration>
         currentResponse.setAskResponse(false);
       }
       
+      // check if we have response text, if not generate reprompt
+      if (currentResponse.getResponseText() == null)
+      {
+    	    // set response as saved reprompt
+    	    currentResponse.setResponseText(SessionUtils.getReprompt(session));
+    	    
+    	    // still no response ?
+    	    if (currentResponse.getResponseText() == null)
+    	    {
+    	      currentResponse = repromptGenerator.generateReprompt(session, context, messageText, intentMatch, currentResponse);
+    	    }
+      }
+      else
+      {
+    	  // is this the response a question?
+    	  if (currentResponse.isAskResponse()) 
+    	  {
+    	    // save the text of the last prompt in the session in case we need it for future processing such as during reprompt generation
+    	    SessionUtils.setLastPrompt(session, currentResponse.getResponseText());
+    	  }
+      }
+      
 
       // build and return response
       return new IntentBotResponse(currentResponse.getResponseText(), currentResponse.getHint(), currentResponse.isAskResponse(),
@@ -341,16 +343,13 @@ public abstract class InkBot<T extends InkBotConfiguration>
     }
   }
   
-  private void setRepromptInSession(CurrentResponse currentResponse, Session session, String defaultResponse)
+  private void setRepromptInSession(CurrentResponse currentResponse, Session session)
   {
     if (currentResponse.getReprompt() != null)
     {
       SessionUtils.setReprompt(session, currentResponse.getReprompt());
     }
-    else
-    {
-      SessionUtils.setReprompt(session, defaultResponse + " " + currentResponse.getResponseText());
-    }
+   
     SessionUtils.setRepromptHint(session, currentResponse.getHint());
     SessionUtils.setRepromptQuickReplies(session, currentResponse.getResponseQuickReplies());
   }
@@ -479,16 +478,7 @@ public abstract class InkBot<T extends InkBotConfiguration>
 	  response.append(line);
 	}
   }
-
-  /**
-   * Sets the default response for the bot. This is the bot's response if it doesn't understand what was said.
-   * 
-   * @param defaultResponses The new default bot responses.
-   */
-  private void setDefaultResponses(String[] defaultResponses)
-  {
-    this.defaultResponses = defaultResponses;
-  }
+ 
 
   /**
    * Adds a InkBotFunction to the bot.

@@ -68,19 +68,19 @@ public class TestDefaultResponses
     }
 
     @Override
-    public List<String> getDefaultResponses()
-    {      
-      return null;
+    public RepromptGenerator getRepromptGenerator()
+    {	
+  	  return new DefaultResponseRepromptGenerator();
     }
   }
   
   
   class BotWithTestDefaultResponses extends BotWithDefaultDefaultResponses
-  {
+  { 
     @Override
-    public List<String> getDefaultResponses()
-    { 
-      return Arrays.asList(new String[]{ "Response A", "Response B", "Response C" });
+    public RepromptGenerator getRepromptGenerator()
+    {	
+  	  return new DefaultResponseRepromptGenerator(new String[]{ "Response A", "Response B", "Response C" });
     }
   }
     

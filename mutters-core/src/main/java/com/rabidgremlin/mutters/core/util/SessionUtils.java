@@ -372,4 +372,26 @@ public class SessionUtils
     return getLocalTimeSlot(match, slotName, defaultValue);
   }
 
+  
+  /**
+   * Stores the text of the last prompt that was sent to the user. 
+   * 
+   * @param session The session.
+   * @param lastPrompt The last prompt text.
+   */
+  public static void setLastPrompt(Session session, String lastPrompt)
+  {
+    session.setAttribute(SLOT_PREFIX + "0987654321LASTPROMPT1234567890", lastPrompt);
+  }
+
+  /**
+   * Gets the text of the last prompt that was sent to the user.
+   * 
+   * @param session The session.
+   * @return The last prompt text or null if there is no last prompt text.
+   */
+  public static String getLastPrompt(Session session)
+  {
+    return (String) session.getAttribute(SLOT_PREFIX + "0987654321LASTPROMPT1234567890");
+  }
 }

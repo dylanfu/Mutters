@@ -18,7 +18,8 @@ public class TestProduct
     List<String> list2 = Arrays.asList("1", "2", "3");
     List<String> list3 = Arrays.asList("X");
 
-    List<List<String>> product = Product.generate(list1, list2, list3);
+    @SuppressWarnings("unchecked")
+	List<List<String>> product = Product.generate(list1, list2, list3);
 
     assertThat(product, is(notNullValue()));
     assertThat(product.size(), is(list1.size() * list2.size() * list3.size()));
