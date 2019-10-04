@@ -12,6 +12,8 @@ import com.rabidgremlin.mutters.templated.SimpleTokenizer;
 import com.rabidgremlin.mutters.templated.TemplatedIntent;
 import com.rabidgremlin.mutters.templated.TemplatedIntentMatcher;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
+
 public class OrderInkBotConfiguration
     implements InkBotConfiguration
 {
@@ -28,6 +30,9 @@ public class OrderInkBotConfiguration
     
     TemplatedIntent checkStatusIntent = matcher.addIntent("CheckStatusIntent");
     checkStatusIntent.addUtterance("What is the status of my order");
+    
+    TemplatedIntent getPriceIntent = matcher.addIntent("GetPriceIntent");
+    getPriceIntent.addUtterance("Can you give me a price");
     
     TemplatedIntent yesIntent = matcher.addIntent("YesIntent");
     yesIntent.addUtterance("Yes");
@@ -66,7 +71,7 @@ public class OrderInkBotConfiguration
   @Override
   public List<String> getDefaultResponses()
   {
-    return null;
+	  return Arrays.asList(new String[]{ "Sorry I didn't catch that." });
   }
 
 }

@@ -81,5 +81,39 @@ public class TestRepromptQuickRepliesAndHint
     assertThat(response.getHint(), is(nullValue()));
     assertThat(response.getQuickReplies(), is(nullValue()));
   }
+  
+  
+  @Test
+  public void givenNoMatchingPhraseAtStartOfConversationShouldReturnDefaultResponse() throws Exception
+  {
+    Session session = new Session();
+    Context context = new Context();
+
+    // Say something the bot won't understand
+    BotResponse response = orderBot.respond(session, context, "The sky is bright yellow");
+    
+    // check that we got default prompt 
+    assertThat(response, is(notNullValue()));
+    assertThat(response.getResponse(), is("Sorry I didn't catch that."));
+  }
+  
+  @Test
+  public void givenNoMatchingPhraseWhenNoRepromptAvailableShouldReturnDefaultResponsePlusOrginalPrompt() throws Exception
+  {
+    Session session = new Session();
+    Context context = new Context();
+
+    // Start pricing conversation
+    BotResponse response = orderBot.respond(session, context, "Can you give me a price");     
+    assertThat(response, is(notNullValue()));
+    assertThat(response.getResponse(), is("Do you want the price for blue widgets ?"));
+    
+    // say something other then yes or no
+    response =  orderBot.respond(session, context, "for green widgets");
+    
+    // check that we get default response + original prompt
+    assertThat(response, is(notNullValue()));
+    assertThat(response.getResponse(), is("Sorry I didn't catch that. Do you want the price for blue widgets ?"));
+  }
 
 }
