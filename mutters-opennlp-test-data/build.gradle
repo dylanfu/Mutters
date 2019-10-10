@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-       classpath 'de.undercouch:gradle-download-task:3.1.1'
+       classpath "de.undercouch:gradle-download-task:$rootProject.ext.gradleDownloadTaskVersion"
     }
 }
 
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    openNLPCompile 'org.apache.opennlp:opennlp-tools:1.6.0'
+    openNLPCompile "org.apache.opennlp:opennlp-tools:$rootProject.ext.openNlpVersion"
 }
 
 task createModelsDir {
