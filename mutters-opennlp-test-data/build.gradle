@@ -46,9 +46,8 @@ task generateIntentModel(type:JavaExec) {
            '-featureGenerators',
            'opennlp.tools.doccat.NGramFeatureGenerator,opennlp.tools.doccat.BagOfWordsFeatureGenerator',
            '-params',
-           'src/main/resources/TaxiBotIntentsParams.txt',
-           '-tokenizer',
-           'opennlp.tools.tokenize.WhitespaceTokenizer']
+           'src/main/resources/TaxiBotIntentsParams.txt'
+           ]
 }
 
 generateIntentModel.dependsOn createModelsDir

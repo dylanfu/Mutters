@@ -13,7 +13,7 @@ project.ext{
     commonsIoVersion = '2.6'
     mockitoVersion = '3.1.0'
     bladeInkVersion = '0.6.0'
-    openNlpVersion = '1.8.0'
+    openNlpVersion = '1.9.1'
     nattyVersion = '0.13'
     
 }
