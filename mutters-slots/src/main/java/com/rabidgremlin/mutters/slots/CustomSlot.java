@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.slots;
 
 import java.util.HashMap;
@@ -12,8 +13,7 @@ import com.rabidgremlin.mutters.core.SlotMatch;
  * @author rabidgremlin
  *
  */
-public class CustomSlot
-    extends Slot
+public class CustomSlot extends Slot
 {
   /** Name of the slot. */
   private String name;
@@ -24,7 +24,7 @@ public class CustomSlot
   /**
    * Constructor.
    * 
-   * @param name The name of the slot.
+   * @param name    The name of the slot.
    * @param options The list of expected options.
    */
   public CustomSlot(String name, String[] options)
@@ -39,7 +39,7 @@ public class CustomSlot
   /**
    * Constructor.
    * 
-   * @param name The name of the slot.
+   * @param name           The name of the slot.
    * @param optionValueMap A map of possible input values mapped to output values.
    */
   public CustomSlot(String name, HashMap<String, String> optionValueMap)

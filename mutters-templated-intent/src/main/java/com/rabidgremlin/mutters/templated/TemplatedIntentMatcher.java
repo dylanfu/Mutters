@@ -1,8 +1,7 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.templated;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -21,8 +20,7 @@ import com.rabidgremlin.mutters.core.Tokenizer;
  * @author rabidgremlin
  *
  */
-public class TemplatedIntentMatcher
-    implements IntentMatcher
+public class TemplatedIntentMatcher implements IntentMatcher
 {
   private final List<TemplatedIntent> intents = new ArrayList<>();
 
@@ -31,7 +29,8 @@ public class TemplatedIntentMatcher
   /**
    * Constructor.
    * 
-   * @param tokenizer The tokenizer to use for parsing users inpout and utterance templates.
+   * @param tokenizer The tokenizer to use for parsing users inpout and utterance
+   *                  templates.
    */
   public TemplatedIntentMatcher(Tokenizer tokenizer)
   {
@@ -39,8 +38,8 @@ public class TemplatedIntentMatcher
 
     // Check that tokenizer preserves slot identifiers
     String[] tokens = tokenizer.tokenize("{City} {Date}");
-    if (tokens == null || tokens.length != 2 ||
-        !tokens[0].equalsIgnoreCase("{city}") || !tokens[1].equalsIgnoreCase("{date}"))
+    if (tokens == null || tokens.length != 2 || !tokens[0].equalsIgnoreCase("{city}")
+        || !tokens[1].equalsIgnoreCase("{date}"))
     {
       throw new IllegalArgumentException("Invalid tokenizer. It removes slot identifiers in {}s");
     }
@@ -62,8 +61,8 @@ public class TemplatedIntentMatcher
   /*
    * (non-Javadoc)
    * 
-   * @see com.rabidgremlin.mutters.core.IntentMatcher#match(java.lang.String, com.rabidgremlin.mutters.core.Context,
-   * Set<String> expectedIntents)
+   * @see com.rabidgremlin.mutters.core.IntentMatcher#match(java.lang.String,
+   * com.rabidgremlin.mutters.core.Context, Set<String> expectedIntents)
    */
   @Override
   public IntentMatch match(String utterance, Context context, Set<String> expectedIntents)
@@ -90,10 +89,10 @@ public class TemplatedIntentMatcher
         TemplatedUtteranceMatch utteranceMatch = intent.matches(cleanedUtterance, context);
         if (utteranceMatch.isMatched())
         {
-          // if match with a templated match then the score is 100%	
+          // if match with a templated match then the score is 100%
           MatcherScores scores = new MatcherScores();
           scores.addScore(intent.getName(), 1.0);
-        	
+
           return new IntentMatch(intent, utteranceMatch.getSlotMatches(), utterance, scores);
         }
       }

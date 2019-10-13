@@ -1,20 +1,20 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core;
 
 import java.util.Collection;
 import java.util.Collections;
 
 /**
- * This class represents an intent. Each intent has a unique name and zero or more Slots that are used to extract
- * entities out of a user's input.
+ * This class represents an intent. Each intent has a unique name and zero or
+ * more Slots that are used to extract entities out of a user's input.
  * 
  * @author rabidgremlin
  *
  */
 public class Intent
 {
-  public final static Intent NONE = new Intent("NONE");	
-	
-	
+  public final static Intent NONE = new Intent("NONE");
+
   /** The name of the intent. */
   protected String name;
 

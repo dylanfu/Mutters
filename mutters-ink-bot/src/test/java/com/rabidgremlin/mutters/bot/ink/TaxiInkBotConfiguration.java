@@ -1,7 +1,10 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.bot.ink;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 import com.bladecoder.ink.runtime.Story;
 import com.rabidgremlin.mutters.core.Intent;
@@ -14,21 +17,18 @@ import com.rabidgremlin.mutters.opennlp.intent.OpenNLPTokenizer;
 import com.rabidgremlin.mutters.opennlp.ner.OpenNLPSlotMatcher;
 import com.rabidgremlin.mutters.slots.LiteralSlot;
 
-import opennlp.tools.tokenize.WhitespaceTokenizer;
-
-public class TaxiInkBotConfiguration
-    implements InkBotConfiguration
+public class TaxiInkBotConfiguration implements InkBotConfiguration
 {
 
   @Override
   public IntentMatcher getIntentMatcher()
   {
- // model was built with OpenNLP whitespace tokenizer
+    // model was built with OpenNLP whitespace tokenizer
     OpenNLPTokenizer tokenizer = new OpenNLPTokenizer(WhitespaceTokenizer.INSTANCE);
-    
+
     // use Open NLP NER for slot matching
     OpenNLPSlotMatcher slotMatcher = new OpenNLPSlotMatcher(tokenizer);
-    slotMatcher.addSlotModel("Address", "models/en-ner-address.bin");   
+    slotMatcher.addSlotModel("Address", "models/en-ner-address.bin");
 
     // create intent matcher
     OpenNLPIntentMatcher matcher = new OpenNLPIntentMatcher("models/en-cat-taxi-intents.bin", tokenizer, slotMatcher);
@@ -73,18 +73,16 @@ public class TaxiInkBotConfiguration
     functions.add(new InkBotFunction()
     {
       @Override
-      public void execute(CurrentResponse currentResponse, Session session, IntentMatch intentMatch,
-        Story story, String param)
+      public void execute(CurrentResponse currentResponse, Session session, IntentMatch intentMatch, Story story,
+          String param)
       {
         try
         {
           story.getVariablesState().set("taxiNo",
               Integer
-                  .toHexString(SessionUtils
-                      .getStringFromSlotOrSession(intentMatch, session, "address", "").hashCode())
+                  .toHexString(SessionUtils.getStringFromSlotOrSession(intentMatch, session, "address", "").hashCode())
                   .substring(0, 4));
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
           throw new RuntimeException("Unable to set taxi no", e);
         }
@@ -113,14 +111,14 @@ public class TaxiInkBotConfiguration
 
   @Override
   public ConfusedKnot getConfusedKnot()
-  {   
+  {
     return null;
   }
 
   @Override
   public RepromptGenerator getRepromptGenerator()
-  {	
-	return new DefaultResponseRepromptGenerator();
+  {
+    return new DefaultResponseRepromptGenerator();
   }
 
 }

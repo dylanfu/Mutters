@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core.ml;
 
 import java.util.Collection;
@@ -22,22 +23,24 @@ import com.rabidgremlin.mutters.core.SlotMatcher;
 import com.rabidgremlin.mutters.core.Tokenizer;
 
 /**
- * This is a helpful base class for intent matchers that use machine learning (ML) to match a user's utterance to an
- * intent.
+ * This is a helpful base class for intent matchers that use machine learning
+ * (ML) to match a user's utterance to an intent.
  * 
- * It supports a pluggable SlotMatcher so that named entity recognition (NER) can also be performed on the utterance.
+ * It supports a pluggable SlotMatcher so that named entity recognition (NER)
+ * can also be performed on the utterance.
  * 
- * Maybe intent match: If a maybeMatchScore is specified then the intent matcher will generate a MaybeXXXXX intent match
- * where XXXXX is the best matched intent which does not meet the specified min match score. In this case the maybe
- * match will be returned if the score difference between the best match and the next best match is higher than the
- * specified maybeMatchScore. If maybeMatchScore score is set to -1 then maybe intent matching is disabled.
+ * Maybe intent match: If a maybeMatchScore is specified then the intent matcher
+ * will generate a MaybeXXXXX intent match where XXXXX is the best matched
+ * intent which does not meet the specified min match score. In this case the
+ * maybe match will be returned if the score difference between the best match
+ * and the next best match is higher than the specified maybeMatchScore. If
+ * maybeMatchScore score is set to -1 then maybe intent matching is disabled.
  * 
  * 
  * @author rabidgremlin
  *
  */
-public abstract class AbstractMachineLearningIntentMatcher
-    implements IntentMatcher
+public abstract class AbstractMachineLearningIntentMatcher implements IntentMatcher
 {
   /** Logger. */
   private Logger log = LoggerFactory.getLogger(AbstractMachineLearningIntentMatcher.class);
@@ -48,7 +51,10 @@ public abstract class AbstractMachineLearningIntentMatcher
   /** Default minimum match score. */
   public static final float MIN_MATCH_SCORE = 0.75f;
 
-  /** The minimum match score. The match must have at least this probability to be considered good. */
+  /**
+   * The minimum match score. The match must have at least this probability to be
+   * considered good.
+   */
   private float minMatchScore;
 
   /** Maybe match score. */
@@ -68,12 +74,16 @@ public abstract class AbstractMachineLearningIntentMatcher
   /**
    * Constructor.
    * 
-   * @param tokenizer The tokenizer to use when tokenizing an utterance.
-   * @param slotMatcher The slot matcher to use when extract slots from the utterance.
-   * @param minMatchScore The minimum match score for an intent match to be considered good.
-   * @param maybeMatchScore The maybe match score. Use -1 to disable maybe matching.
+   * @param tokenizer       The tokenizer to use when tokenizing an utterance.
+   * @param slotMatcher     The slot matcher to use when extract slots from the
+   *                        utterance.
+   * @param minMatchScore   The minimum match score for an intent match to be
+   *                        considered good.
+   * @param maybeMatchScore The maybe match score. Use -1 to disable maybe
+   *                        matching.
    */
-  public AbstractMachineLearningIntentMatcher(Tokenizer tokenizer, SlotMatcher slotMatcher, float minMatchScore, float maybeMatchScore)
+  public AbstractMachineLearningIntentMatcher(Tokenizer tokenizer, SlotMatcher slotMatcher, float minMatchScore,
+      float maybeMatchScore)
   {
     this.minMatchScore = minMatchScore;
     this.maybeMatchScore = maybeMatchScore;
@@ -90,22 +100,22 @@ public abstract class AbstractMachineLearningIntentMatcher
   {
     intents.put(intent.getName().toUpperCase(), intent);
   }
-  
-  /** 
+
+  /**
    * Returns the intents for this matcher.
    * 
    * @return The intents for this matcher
    */
   public Collection<Intent> getIntents()
   {
-	  return Collections.unmodifiableCollection(intents.values());
+    return Collections.unmodifiableCollection(intents.values());
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see com.rabidgremlin.mutters.core.IntentMatcher#match(String utterance, Context context, Set<String>
-   * expectedIntents)
+   * @see com.rabidgremlin.mutters.core.IntentMatcher#match(String utterance,
+   * Context context, Set<String> expectedIntents)
    */
   @Override
   public IntentMatch match(String utterance, Context context, Set<String> expectedIntents)
@@ -120,7 +130,7 @@ public abstract class AbstractMachineLearningIntentMatcher
 
     SortedMap<Double, Set<String>> scoredCats = generateSortedScoreMap(utteranceTokens);
     log.debug("Sorted scores were: {}", scoredCats);
-    
+
     double bestScore = 0;
     String bestCategory = null;
     boolean hasMaybeIntent = false;
@@ -132,14 +142,14 @@ public abstract class AbstractMachineLearningIntentMatcher
       bestScore = scoredCats.lastKey();
       bestCategory = (String) scoredCats.get(bestScore).toArray()[0];
 
-      // if we don't have a list of expected intents but do have a maybeMatchScore then assume we can have a Maybe
+      // if we don't have a list of expected intents but do have a maybeMatchScore
+      // then assume we can have a Maybe
       // intent
       if (maybeMatchScore != -1)
       {
         hasMaybeIntent = true;
       }
-    }
-    else
+    } else
     {
       // yep, find the best match that is also in the set of expected intents
       while (!scoredCats.isEmpty())
@@ -157,7 +167,8 @@ public abstract class AbstractMachineLearningIntentMatcher
             // yep, found one
             bestCategory = cat;
 
-            // if we have a maybeMatchScore then check we have a maybe intent in the expected intents list
+            // if we have a maybeMatchScore then check we have a maybe intent in the
+            // expected intents list
             if (maybeMatchScore != -1 && expectedIntents.contains(MAYBE_INTENT_PREFIX + cat))
             {
               hasMaybeIntent = true;
@@ -209,7 +220,8 @@ public abstract class AbstractMachineLearningIntentMatcher
         // yes, was the score difference between best and next best good enough
         // to meet maybeMatchScore ?
         Double scoreDiff = calcScoreDifference(scoredCats);
-        log.debug("Checking if difference between best and next best score of {} is better than maybeMatchScore of {}", scoreDiff, maybeMatchScore);
+        log.debug("Checking if difference between best and next best score of {} is better than maybeMatchScore of {}",
+            scoreDiff, maybeMatchScore);
         if (scoreDiff != null && scoreDiff > maybeMatchScore)
         {
           // yes, so lets return maybe intent
@@ -232,14 +244,12 @@ public abstract class AbstractMachineLearningIntentMatcher
           // return maybe intent instead of best intent
           bestIntent = maybeIntent;
           log.debug("Matching to maybe intent: {}", bestIntent.getName());
-        }
-        else
+        } else
         {
           log.debug("Score difference between best and next best too low. Skipping maybe intent");
           return new NoIntentMatch(new MatcherScores(scoredCats));
         }
-      }
-      else
+      } else
       {
         return new NoIntentMatch(new MatcherScores(scoredCats));
       }

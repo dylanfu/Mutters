@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core;
 
 /**
@@ -20,9 +21,9 @@ public class SlotMatch
   /**
    * Constructor.
    * 
-   * @param slot The slot that was matched.
+   * @param slot         The slot that was matched.
    * @param orginalValue The original value that was used to match on.
-   * @param value The value that was matched.
+   * @param value        The value that was matched.
    */
   public SlotMatch(Slot slot, String orginalValue, Object value)
   {

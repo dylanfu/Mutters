@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -88,7 +89,6 @@ public class TestDateSlot
     assertThat(match, is(notNullValue()));
     assertThat(match.isMatched(), is(false));
   }
-  
 
   @Test
   public void testNZDateFullNumeric()
@@ -98,7 +98,7 @@ public class TestDateSlot
     String[] input = tokenizer.tokenize("20/5/2016");
     Slots slots = new Slots();
     Context context = new Context();
-    context.setLocale(new Locale("en","NZ"));
+    context.setLocale(new Locale("en", "NZ"));
 
     DateSlot slot = new DateSlot("date");
     slots.add(slot);
@@ -114,16 +114,16 @@ public class TestDateSlot
     assertThat(dateMatch.getMonth().getValue(), is(5));
     assertThat(dateMatch.getYear(), is(2016));
   }
-  
+
   @Test
   public void testNZDateShortYear()
-  { 
+  {
     TemplatedUtterance utterance = new TemplatedUtterance(tokenizer.tokenize("{date}"));
 
     String[] input = tokenizer.tokenize("20/5/16");
     Slots slots = new Slots();
     Context context = new Context();
-    context.setLocale(new Locale("en","NZ"));
+    context.setLocale(new Locale("en", "NZ"));
 
     DateSlot slot = new DateSlot("date");
     slots.add(slot);
@@ -139,16 +139,16 @@ public class TestDateSlot
     assertThat(dateMatch.getMonth().getValue(), is(5));
     assertThat(dateMatch.getYear(), is(2016));
   }
-  
+
   @Test
   public void testNZDateDayMonthOnly()
-  { 
+  {
     TemplatedUtterance utterance = new TemplatedUtterance(tokenizer.tokenize("{date}"));
 
     String[] input = tokenizer.tokenize("20/5");
     Slots slots = new Slots();
     Context context = new Context();
-    context.setLocale(new Locale("en","NZ"));
+    context.setLocale(new Locale("en", "NZ"));
 
     DateSlot slot = new DateSlot("date");
     slots.add(slot);
@@ -164,16 +164,16 @@ public class TestDateSlot
     assertThat(dateMatch.getMonth().getValue(), is(5));
     assertThat(dateMatch.getYear(), is(LocalDate.now().getYear()));
   }
-  
+
   @Test
   public void testNZDateDayMonthAsTextOnly()
-  { 
+  {
     TemplatedUtterance utterance = new TemplatedUtterance(tokenizer.tokenize("{date}"));
 
     String[] input = tokenizer.tokenize("1 dec");
     Slots slots = new Slots();
     Context context = new Context();
-    context.setLocale(new Locale("en","NZ"));
+    context.setLocale(new Locale("en", "NZ"));
 
     DateSlot slot = new DateSlot("date");
     slots.add(slot);

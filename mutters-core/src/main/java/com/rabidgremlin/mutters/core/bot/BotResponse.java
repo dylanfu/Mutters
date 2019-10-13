@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core.bot;
 
 import java.util.Collections;
@@ -6,7 +7,8 @@ import java.util.List;
 /**
  * This class holds a response from a bot.
  * 
- * Apart from the response text the bot can also return hints, attachments (for rich responses) and debug values.
+ * Apart from the response text the bot can also return hints, attachments (for
+ * rich responses) and debug values.
  * 
  * @author rabidgremlin
  *
@@ -27,18 +29,19 @@ public class BotResponse
 
   /** List of suggested replies that the user could use. */
   private List<String> quickReplies;
- 
+
   /**
    * Constructor.
    * 
-   * @param response The response text.
-   * @param hint Any hint text for the client to display.
-   * @param askResponse True if this the bot is expecting a further response from the user.
-   * @param attachments The attachments for the response.
+   * @param response     The response text.
+   * @param hint         Any hint text for the client to display.
+   * @param askResponse  True if this the bot is expecting a further response from
+   *                     the user.
+   * @param attachments  The attachments for the response.
    * @param quickReplies List of suggested replies that the user could use.
    */
-  public BotResponse(String response, String hint, boolean askResponse,
-    List<BotResponseAttachment> attachments, List<String> quickReplies)
+  public BotResponse(String response, String hint, boolean askResponse, List<BotResponseAttachment> attachments,
+      List<String> quickReplies)
   {
     this.response = response;
     this.hint = hint;
@@ -58,8 +61,8 @@ public class BotResponse
   }
 
   /**
-   * This returns true if the bot is expecting a further response from the user. Allows a client to adjust its UI
-   * appropriately.
+   * This returns true if the bot is expecting a further response from the user.
+   * Allows a client to adjust its UI appropriately.
    * 
    * @return True if a further response is expected.
    */
@@ -84,8 +87,8 @@ public class BotResponse
   }
 
   /**
-   * Returns the current hint for the expected response from the user. Can be used by a client to provide a visual
-   * prompt.
+   * Returns the current hint for the expected response from the user. Can be used
+   * by a client to provide a visual prompt.
    * 
    * @return The hint or null if no hint.
    */
@@ -93,7 +96,7 @@ public class BotResponse
   {
     return hint;
   }
-  
+
   /**
    * Returns the quick replies for this response.
    * 

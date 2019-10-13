@@ -1,8 +1,7 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.bot.ink.functions.orderbot;
 
 import java.util.List;
-
-import org.junit.Test;
 
 import com.rabidgremlin.mutters.bot.ink.DefaultResponseRepromptGenerator;
 import com.rabidgremlin.mutters.bot.ink.InkBotConfiguration;
@@ -14,10 +13,7 @@ import com.rabidgremlin.mutters.templated.SimpleTokenizer;
 import com.rabidgremlin.mutters.templated.TemplatedIntent;
 import com.rabidgremlin.mutters.templated.TemplatedIntentMatcher;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
-
-public class OrderInkBotConfiguration
-    implements InkBotConfiguration
+public class OrderInkBotConfiguration implements InkBotConfiguration
 {
 
   @Override
@@ -29,19 +25,18 @@ public class OrderInkBotConfiguration
 
     TemplatedIntent createOrderIntent = matcher.addIntent("CreateOrderIntent");
     createOrderIntent.addUtterance("Order a widget");
-    
+
     TemplatedIntent checkStatusIntent = matcher.addIntent("CheckStatusIntent");
     checkStatusIntent.addUtterance("What is the status of my order");
-    
+
     TemplatedIntent getPriceIntent = matcher.addIntent("GetPriceIntent");
     getPriceIntent.addUtterance("Can you give me a price");
-    
+
     TemplatedIntent yesIntent = matcher.addIntent("YesIntent");
     yesIntent.addUtterance("Yes");
-    
+
     TemplatedIntent noIntent = matcher.addIntent("NoIntent");
     noIntent.addUtterance("No");
-        
 
     return matcher;
   }
@@ -69,11 +64,11 @@ public class OrderInkBotConfiguration
   {
     return null;
   }
-	 
+
   @Override
   public RepromptGenerator getRepromptGenerator()
-  {	
-    return new DefaultResponseRepromptGenerator(new String[]{ "Sorry I didn't catch that." });
-  } 
+  {
+    return new DefaultResponseRepromptGenerator(new String[] { "Sorry I didn't catch that." });
+  }
 
 }

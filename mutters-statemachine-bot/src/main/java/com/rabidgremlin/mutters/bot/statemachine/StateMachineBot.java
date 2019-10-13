@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.bot.statemachine;
 
 import java.util.List;
@@ -9,9 +10,7 @@ import com.rabidgremlin.mutters.core.Context;
 import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
-import com.rabidgremlin.mutters.core.bot.Bot;
 import com.rabidgremlin.mutters.core.bot.BotException;
-import com.rabidgremlin.mutters.core.bot.BotResponse;
 import com.rabidgremlin.mutters.core.bot.BotResponseAttachment;
 import com.rabidgremlin.mutters.core.bot.IntentBot;
 import com.rabidgremlin.mutters.core.bot.IntentBotResponse;
@@ -21,14 +20,14 @@ import com.rabidgremlin.mutters.state.IntentResponse;
 import com.rabidgremlin.mutters.state.StateMachine;
 
 /**
- * This is the base bot class for bots that use a state machine to manage conversation state.
+ * This is the base bot class for bots that use a state machine to manage
+ * conversation state.
  * 
  * 
  * @author rabidgremlin
  *
  */
-public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
-    implements IntentBot
+public abstract class StateMachineBot<T extends StateMachineBotConfiguration> implements IntentBot
 {
   /** Logger for the bot. */
   private Logger log = LoggerFactory.getLogger(StateMachineBot.class);
@@ -65,15 +64,14 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
   /*
    * (non-Javadoc)
    * 
-   * @see com.rabidgremlin.mutters.bot.Bot#respond(com.rabidgremlin.mutters.session.Session,
-   * com.rabidgremlin.mutters.core.Context, java.lang.String)
+   * @see
+   * com.rabidgremlin.mutters.bot.Bot#respond(com.rabidgremlin.mutters.session.
+   * Session, com.rabidgremlin.mutters.core.Context, java.lang.String)
    */
   @Override
-  public IntentBotResponse respond(Session session, Context context, String messageText)
-    throws BotException
+  public IntentBotResponse respond(Session session, Context context, String messageText) throws BotException
   {
-    log.debug("session: {} context: {} messageText: {}",
-        new Object[]{ session, context, messageText });
+    log.debug("session: {} context: {} messageText: {}", new Object[] { session, context, messageText });
 
     // set up default response in case bot has issue processing input
     String responseText = SessionUtils.getReprompt(session);
@@ -108,15 +106,13 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
         {
           session.reset();
           askResponse = false;
-        }
-        else
+        } else
         {
           if (reprompt != null)
           {
             SessionUtils.setReprompt(session, reprompt);
             SessionUtils.setRepromptHint(session, hint);
-          }
-          else
+          } else
           {
             SessionUtils.setReprompt(session, defaultResponse + " " + responseText);
             SessionUtils.setRepromptHint(session, null);
@@ -124,16 +120,17 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration>
         }
       }
 
-      return new IntentBotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies, intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
-    }
-    catch (IllegalStateException e)
+      return new IntentBotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies,
+          intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
+    } catch (IllegalStateException e)
     {
       throw new BotException("Hit illegal state", e);
     }
   }
 
   /**
-   * Sets the default response for the bot. This is the bot's response if it doesn't understand what was said.
+   * Sets the default response for the bot. This is the bot's response if it
+   * doesn't understand what was said.
    * 
    * @param defaultResponse The new default bot response.
    */

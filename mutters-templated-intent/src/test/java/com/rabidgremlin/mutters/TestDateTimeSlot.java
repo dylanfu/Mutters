@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -70,8 +71,7 @@ public class TestDateTimeSlot
     SlotMatch slotMatch = match.getSlotMatches().get(slot);
     assertThat(slotMatch, is(notNullValue()));
     assertThat(slotMatch.getOrginalValue(), is("30th May 1974 at 10pm"));
-    assertThat(slotMatch.getValue(),
-        is(ZonedDateTime.of(1974, 5, 30, 22, 0, 0, 0, context.getTimeZone().toZoneId())));
+    assertThat(slotMatch.getValue(), is(ZonedDateTime.of(1974, 5, 30, 22, 0, 0, 0, context.getTimeZone().toZoneId())));
   }
 
   @Test

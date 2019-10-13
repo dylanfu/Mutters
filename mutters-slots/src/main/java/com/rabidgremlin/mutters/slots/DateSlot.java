@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.slots;
 
 import java.time.LocalDate;
@@ -19,13 +20,13 @@ import com.rabidgremlin.mutters.core.Slot;
 import com.rabidgremlin.mutters.core.SlotMatch;
 
 /**
- * Slot that matches on dates (into a {@link LocalDate}). Uses natty to handle 'dates' such as 'next Friday'.
+ * Slot that matches on dates (into a {@link LocalDate}). Uses natty to handle
+ * 'dates' such as 'next Friday'.
  * 
  * @author rabidgremlin
  *
  */
-public class DateSlot
-    extends Slot
+public class DateSlot extends Slot
 {
 
   private final String name;
@@ -42,28 +43,32 @@ public class DateSlot
     int currentYear = LocalDate.now().getYear();
 
     // try parse in short format for locale
-    LocalDate date = tryParse(token, currentYear, DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(context.getLocale()));
+    LocalDate date = tryParse(token, currentYear,
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(context.getLocale()));
     if (date != null)
     {
       return new SlotMatch(this, token, date);
     }
 
     // try parse in medium format for locale
-    date = tryParse(token, currentYear, DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(context.getLocale()));
+    date = tryParse(token, currentYear,
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(context.getLocale()));
     if (date != null)
     {
       return new SlotMatch(this, token, date);
     }
 
     // try parse in long format for locale
-    date = tryParse(token, currentYear, DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(context.getLocale()));
+    date = tryParse(token, currentYear,
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).withLocale(context.getLocale()));
     if (date != null)
     {
       return new SlotMatch(this, token, date);
     }
 
     // try other formats
-    date = tryParse(token, currentYear, DateTimeFormatter.ofPattern("d[/][-][.][ ]M[/][-][.][ ][yyyy][yy]").withLocale(context.getLocale()));
+    date = tryParse(token, currentYear,
+        DateTimeFormatter.ofPattern("d[/][-][.][ ]M[/][-][.][ ][yyyy][yy]").withLocale(context.getLocale()));
     if (date != null)
     {
       return new SlotMatch(this, token, date);
@@ -79,14 +84,16 @@ public class DateSlot
       {
         List<Date> dates = group.getDates();
 
-        // natty is very aggressive so will match date on text that is largely not a date, which is
+        // natty is very aggressive so will match date on text that is largely not a
+        // date, which is
         // not what we want
         String matchText = group.getText();
         float percMatch = (float) matchText.length() / (float) token.length();
 
         if (!dates.isEmpty() && percMatch > 0.75)
         {
-          ZonedDateTime theDateTime = ZonedDateTime.ofInstant(dates.get(0).toInstant(), context.getTimeZone().toZoneId());
+          ZonedDateTime theDateTime = ZonedDateTime.ofInstant(dates.get(0).toInstant(),
+              context.getTimeZone().toZoneId());
           LocalDate localDate = theDateTime.toLocalDate();
           return new SlotMatch(this, token, localDate);
         }
@@ -99,7 +106,8 @@ public class DateSlot
   {
     try
     {
-      // workaround for migrating jodatime 'withDefault...' see: https://stackoverflow.com/a/49815584/6122976
+      // workaround for migrating jodatime 'withDefault...' see:
+      // https://stackoverflow.com/a/49815584/6122976
 
       // init the defaults
       LocalDate defaults = LocalDate.of(currentYear, Month.JANUARY, 1);
@@ -107,15 +115,16 @@ public class DateSlot
       TemporalAccessor parsed = fmt.parse(token);
       // override defaults with parsed values
       ChronoField[] fieldsToOverride = { ChronoField.YEAR, ChronoField.MONTH_OF_YEAR, ChronoField.DAY_OF_MONTH };
-      for (TemporalField fieldToOverride : fieldsToOverride) {
-        if (parsed.isSupported(fieldToOverride)) {
+      for (TemporalField fieldToOverride : fieldsToOverride)
+      {
+        if (parsed.isSupported(fieldToOverride))
+        {
           defaults = defaults.with(fieldToOverride, parsed.getLong(fieldToOverride));
         }
       }
 
       return defaults;
-    }
-    catch (DateTimeParseException e)
+    } catch (DateTimeParseException e)
     {
       return null;
     }
