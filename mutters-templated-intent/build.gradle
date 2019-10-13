@@ -1,11 +1,14 @@
 buildscript {
     repositories {
-        jcenter()
+        //jcenter()
+        mavenCentral()
     }
     dependencies { 
         classpath "ch.raffael.pegdown-doclet:pegdown-doclet:$rootProject.ext.pegdownDocletVersion"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$rootProject.ext.spotlessVersion"
     }
 }
+
 apply from: '../buildpublish.gradle'
 
 

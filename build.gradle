@@ -1,7 +1,15 @@
+buildscript {
+    repositories {
+        //jcenter()
+        mavenCentral()
+    }
+}    
+
 project.ext{
     // plugin versions
     pegdownDocletVersion = '1.3'
     gradleDownloadTaskVersion = '4.0.0'
+    spotlessVersion = '3.25.0' 
 
     //dependencies versions
     commonsLang3Version = '3.9'
