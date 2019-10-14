@@ -111,7 +111,8 @@ public class FastTextIntentMatcher extends AbstractMachineLearningIntentMatcher
       // load the model from the temp file
       jft.loadModel(tempFile.getAbsolutePath());
 
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new IllegalArgumentException("Unable to load fastText model", e);
     }

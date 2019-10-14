@@ -2,6 +2,7 @@
 package com.rabidgremlin.mutters.slots;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.rabidgremlin.mutters.core.Context;
 import com.rabidgremlin.mutters.core.Slot;
@@ -45,9 +46,10 @@ public class CustomSlot extends Slot
   public CustomSlot(String name, HashMap<String, String> optionValueMap)
   {
     this.name = name;
-    for (String key : optionValueMap.keySet())
+
+    for (Entry<String, String> entry : optionValueMap.entrySet())
     {
-      this.options.put(key.toLowerCase(), optionValueMap.get(key));
+      this.options.put(entry.getKey().toLowerCase(), entry.getValue());
     }
   }
 

@@ -22,7 +22,7 @@ public class TestConfusedBot
   private TaxiInkBot botWithoutConfusedKnot;
   private TaxiInkBot botWithConfusedKnotWithReprompts;
 
-  class TaxiBotWithConfusedKnotConfig extends TaxiInkBotConfiguration
+  static class TaxiBotWithConfusedKnotConfig extends TaxiInkBotConfiguration
   {
     @Override
     public ConfusedKnot getConfusedKnot()
@@ -31,7 +31,7 @@ public class TestConfusedBot
     }
   }
 
-  class TaxiBotWithConfusedKnotWithRepromptsConfig extends TaxiInkBotConfiguration
+  static class TaxiBotWithConfusedKnotWithRepromptsConfig extends TaxiInkBotConfiguration
   {
     @Override
     public ConfusedKnot getConfusedKnot()
@@ -40,7 +40,7 @@ public class TestConfusedBot
     }
   }
 
-  class TaxiBotWithoutConfusedKnotConfig extends TaxiInkBotConfiguration
+  static class TaxiBotWithoutConfusedKnotConfig extends TaxiInkBotConfiguration
   {
     @Override
     public ConfusedKnot getConfusedKnot()
@@ -169,7 +169,7 @@ public class TestConfusedBot
         startsWith("I'm struggling with that one. Do you want me to call our service line for you?"));
     assertThat(response.isAskResponse(), is(true));
 
-    assertThat(SessionUtils.getReprompt(session), is("Would you like me to call our service line?"));
+    assertThat(InkBotSessionUtils.getReprompt(session), is("Would you like me to call our service line?"));
 
     assertThat(response.getHint(), is("Yes or no"));
 

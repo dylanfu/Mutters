@@ -129,7 +129,7 @@ public class TestIntentMatcher
   }
 
   // slot that matches a colour or defaults to black
-  class ColorsSlot extends CustomSlot implements DefaultValueSlot
+  static class ColorsSlot extends CustomSlot implements DefaultValueSlot
   {
     public ColorsSlot()
     {

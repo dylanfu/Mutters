@@ -76,7 +76,8 @@ public abstract class Slot
       {
         return false;
       }
-    } else
+    }
+    else
     {
       if (!getName().equals(other.getName()))
       {

@@ -67,7 +67,8 @@ public class OpenNLPSlotMatcher implements SlotMatcher
       {
         URL modelUrl = Thread.currentThread().getContextClassLoader().getResource(nerModel);
         tnfModel = new TokenNameFinderModel(modelUrl);
-      } catch (Exception e)
+      }
+      catch (Exception e)
       {
         throw new IllegalArgumentException("Unable to load NER model", e);
       }
@@ -111,7 +112,8 @@ public class OpenNLPSlotMatcher implements SlotMatcher
           matchedSlots.put(slot, match);
           slotMatched = true;
           log.debug("Match found {}", match);
-        } else
+        }
+        else
         {
           log.debug("No Match found slot: {} text: {} ", slot.getName(), matches);
         }
@@ -122,7 +124,8 @@ public class OpenNLPSlotMatcher implements SlotMatcher
         Object defaultValue = ((DefaultValueSlot) slot).getDefaultValue();
         matchedSlots.put(slot, new SlotMatch(slot, utterance, defaultValue));
         log.debug("No Match found slot: {} Using default value: {} ", slot.getName(), defaultValue);
-      } else
+      }
+      else
       {
         log.debug("Did not find slot {} utteranceTokens {} ", slot.getName(), utteranceTokens);
       }

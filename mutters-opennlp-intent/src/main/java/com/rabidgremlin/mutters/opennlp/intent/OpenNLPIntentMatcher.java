@@ -87,7 +87,8 @@ public class OpenNLPIntentMatcher extends AbstractMachineLearningIntentMatcher
     try
     {
       model = new DoccatModel(intentModelUrl);
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new IllegalArgumentException("Unable to load intent model", e);
     }

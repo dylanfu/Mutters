@@ -60,7 +60,8 @@ public final class FunctionHelper
           functionDetails.addFunctionParams(name.trim(), value.trim());
         }
       }
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new IllegalArgumentException("Unable to parse function parameters.", e);
     }

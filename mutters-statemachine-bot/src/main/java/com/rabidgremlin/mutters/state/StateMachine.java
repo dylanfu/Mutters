@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
@@ -26,7 +27,7 @@ public class StateMachine
 
   private HashMap<String, PreEventAction> preEventActions = new HashMap<String, PreEventAction>();
 
-  class Transition
+  static class Transition
   {
     private State toState;
 
@@ -200,7 +201,8 @@ public class StateMachine
       {
         transitionToState = transition.toState;
         break;
-      } else
+      }
+      else
       {
         if (transition.guard.passes(match, session))
         {
@@ -256,9 +258,9 @@ public class StateMachine
       out.println(";");
     }
 
-    for (String key : transitionMap.keySet())
+    for (Entry<String, List<Transition>> entry : transitionMap.entrySet())
     {
-      String[] splitKey = key.split("-");
+      String[] splitKey = entry.getKey().split("-");
       String intent = splitKey[0];
       State fromState;
 
@@ -266,12 +268,13 @@ public class StateMachine
       if (splitKey[1].equals("*"))
       {
         fromState = anyState;
-      } else
+      }
+      else
       {
         fromState = states.get(splitKey[1]);
       }
 
-      List<Transition> transitionToStateList = transitionMap.get(key);
+      List<Transition> transitionToStateList = entry.getValue();
 
       for (Transition transition : transitionToStateList)
       {

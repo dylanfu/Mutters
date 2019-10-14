@@ -82,7 +82,8 @@ public class TaxiInkBotConfiguration implements InkBotConfiguration
               Integer
                   .toHexString(SessionUtils.getStringFromSlotOrSession(intentMatch, session, "address", "").hashCode())
                   .substring(0, 4));
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
           throw new RuntimeException("Unable to set taxi no", e);
         }

@@ -78,11 +78,13 @@ public class GetLongTermAttributeFunction implements InkBotFunction
       if (value == null)
       {
         story.getVariablesState().set(var, "");
-      } else
+      }
+      else
       {
         story.getVariablesState().set(var, value);
       }
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new RuntimeException("Failed to get long term attribute", e);
     }

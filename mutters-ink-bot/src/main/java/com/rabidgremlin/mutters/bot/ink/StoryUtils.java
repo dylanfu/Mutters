@@ -37,8 +37,9 @@ public final class StoryUtils
     // sometimes numbers are strings
     try
     {
-      return (int) story.getVariablesState().get(varName);
-    } catch (java.lang.ClassCastException e)
+      return (Number) story.getVariablesState().get(varName);
+    }
+    catch (java.lang.ClassCastException e)
     {
 
       String numStr = (String) story.getVariablesState().get(varName);
@@ -51,13 +52,15 @@ public final class StoryUtils
       try
       {
         return Long.parseLong(numStr);
-      } catch (NumberFormatException nfe1)
+      }
+      catch (NumberFormatException nfe1)
       {
         // try parse as decimal
         try
         {
           return Double.parseDouble(numStr);
-        } catch (NumberFormatException nfe2)
+        }
+        catch (NumberFormatException nfe2)
         {
           return null;
         }
@@ -85,7 +88,8 @@ public final class StoryUtils
     try
     {
       return LocalDate.parse(dateStr);
-    } catch (DateTimeParseException e)
+    }
+    catch (DateTimeParseException e)
     {
       return null;
     }
@@ -111,7 +115,8 @@ public final class StoryUtils
     try
     {
       return boolVal.equals(1);
-    } catch (IllegalArgumentException e)
+    }
+    catch (IllegalArgumentException e)
     {
       return false;
     }
@@ -130,7 +135,8 @@ public final class StoryUtils
     try
     {
       return (String) story.getVariablesState().get(varName);
-    } catch (java.lang.ClassCastException cce)
+    }
+    catch (java.lang.ClassCastException cce)
     {
       return null;
     }
@@ -150,7 +156,8 @@ public final class StoryUtils
 
       // replace seems to be a weird hack. as in example from blade-ink library
       return IOUtils.toString(inkJsonStream, StandardCharsets.UTF_8).replace('\uFEFF', ' ');
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new IllegalStateException("Failed to load ink json.", e);
     }

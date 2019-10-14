@@ -124,7 +124,8 @@ public class DateSlot extends Slot
       }
 
       return defaults;
-    } catch (DateTimeParseException e)
+    }
+    catch (DateTimeParseException e)
     {
       return null;
     }

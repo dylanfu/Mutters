@@ -11,10 +11,10 @@ import com.rabidgremlin.mutters.core.session.Session;
  * @author rabidgremlin
  *
  */
-public class SessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtils
+public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtils
 {
 
-  protected SessionUtils()
+  protected InkBotSessionUtils()
   {
     // utility class
   }
@@ -27,7 +27,7 @@ public class SessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtil
    */
   public static void setFailedToUnderstandCount(Session session, int count)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321FAILEDCOUNT1234567890", new Integer(count));
+    session.setAttribute(SLOT_PREFIX + "0987654321FAILEDCOUNT1234567890", Integer.valueOf(count));
   }
 
   /**
@@ -43,7 +43,8 @@ public class SessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtil
     if (failedToUnderstandCount == null)
     {
       return 0;
-    } else
+    }
+    else
     {
       return failedToUnderstandCount;
     }
@@ -71,7 +72,8 @@ public class SessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtil
       session.setAttribute(SLOT_PREFIX + "0987654321STORYSTATE1234567890", storyState.toJson());
       // save length of story JSON and use as a crude version check
       session.setAttribute(SLOT_PREFIX + "0987654321STORYJSONLENGTH1234567890", Integer.valueOf(storyJson.length()));
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new RuntimeException("Unexpected error. Failed to save story state", e);
     }
@@ -105,7 +107,8 @@ public class SessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtil
 
         storyState.loadJson(stateJson);
       }
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new BadInkStoryState("Unexpected error. Failed to load story state", e);
     }

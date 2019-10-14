@@ -21,7 +21,7 @@ public class DefaultResponseRepromptGenerator implements RepromptGenerator
 
   public DefaultResponseRepromptGenerator(String[] defaultResponses)
   {
-    this.defaultResponses = defaultResponses;
+    this.defaultResponses = defaultResponses.clone();
   }
 
   @Override
@@ -32,14 +32,15 @@ public class DefaultResponseRepromptGenerator implements RepromptGenerator
     String defaultResponse = defaultResponses[rand.nextInt(defaultResponses.length)];
 
     // grab the last response we sent to the user
-    String lastResponse = SessionUtils.getLastPrompt(session);
+    String lastResponse = InkBotSessionUtils.getLastPrompt(session);
 
     // do we have a last response ? If so add it to default response to create
     // reprompt
     if (lastResponse != null)
     {
       currentResponse.setResponseText(defaultResponse + " " + lastResponse);
-    } else
+    }
+    else
     {
       // no last response so just use default response
       currentResponse.setResponseText(defaultResponse);

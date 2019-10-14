@@ -66,7 +66,8 @@ public class TestSessionRestore
       response = storyNewBot.respond(session, context, "Three");
       // assertThat(response.getResponse(), is("You chose option three"));
       fail("Code should not reach here. Expected exception to be thrown");
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       if (!e.getCause().getClass().equals(BadInkStoryState.class))
       {

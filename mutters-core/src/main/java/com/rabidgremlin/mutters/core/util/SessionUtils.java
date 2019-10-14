@@ -172,13 +172,15 @@ public class SessionUtils
       try
       {
         return (String) match.getSlotMatch(slotName).getValue();
-      } catch (ClassCastException e)
+      }
+      catch (ClassCastException e)
       {
         // failed to cast so assume invalid string and return default
         LOG.warn("Non String value: {} found in slot {}", match.getSlotMatch(slotName).getValue(), slotName);
         return defaultValue;
       }
-    } else
+    }
+    else
     {
       return defaultValue;
     }
@@ -199,13 +201,15 @@ public class SessionUtils
       try
       {
         return (Number) match.getSlotMatch(slotName).getValue();
-      } catch (ClassCastException e)
+      }
+      catch (ClassCastException e)
       {
         // failed to cast so assume invalid number and return default
         LOG.warn("Non Number value: {} found in slot {}", match.getSlotMatch(slotName).getValue(), slotName);
         return defaultValue;
       }
-    } else
+    }
+    else
     {
       return defaultValue;
     }
@@ -226,13 +230,15 @@ public class SessionUtils
       try
       {
         return (LocalDate) match.getSlotMatch(slotName).getValue();
-      } catch (ClassCastException e)
+      }
+      catch (ClassCastException e)
       {
         // failed to cast so assume invalid localdate and return default
         LOG.warn("Non LocalDate value: {} found in slot {}", match.getSlotMatch(slotName).getValue(), slotName);
         return defaultValue;
       }
-    } else
+    }
+    else
     {
       return defaultValue;
     }
@@ -253,13 +259,15 @@ public class SessionUtils
       try
       {
         return (LocalTime) match.getSlotMatch(slotName).getValue();
-      } catch (ClassCastException e)
+      }
+      catch (ClassCastException e)
       {
         // failed to cast so assume invalid localtime and return default
         LOG.warn("Non LocalTime value: {} found in slot {}", match.getSlotMatch(slotName).getValue(), slotName);
         return defaultValue;
       }
-    } else
+    }
+    else
     {
       return defaultValue;
     }

@@ -49,7 +49,8 @@ public class UtteranceGenerator
       {
         String[] words = group.substring(1, group.length() - 1).split("\\|", -1);
         lists.add(new ArrayList(Arrays.asList(words)));
-      } else
+      }
+      else
       {
         lists.add(new ArrayList(Arrays.asList(group)));
       }

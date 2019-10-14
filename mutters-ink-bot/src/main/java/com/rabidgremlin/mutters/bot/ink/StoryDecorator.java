@@ -30,12 +30,14 @@ public class StoryDecorator extends Story
     try
     {
       super.unbindExternalFunction(funcName);
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       if (e.getMessage().contains("has not been bound"))
       {
         // Intentional blank, if we get this it means the function has never been bound.
-      } else
+      }
+      else
       {
         throw e;
       }

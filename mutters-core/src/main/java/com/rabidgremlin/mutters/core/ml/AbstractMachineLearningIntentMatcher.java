@@ -149,7 +149,8 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
       {
         hasMaybeIntent = true;
       }
-    } else
+    }
+    else
     {
       // yep, find the best match that is also in the set of expected intents
       while (!scoredCats.isEmpty())
@@ -244,12 +245,14 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
           // return maybe intent instead of best intent
           bestIntent = maybeIntent;
           log.debug("Matching to maybe intent: {}", bestIntent.getName());
-        } else
+        }
+        else
         {
           log.debug("Score difference between best and next best too low. Skipping maybe intent");
           return new NoIntentMatch(new MatcherScores(scoredCats));
         }
-      } else
+      }
+      else
       {
         return new NoIntentMatch(new MatcherScores(scoredCats));
       }

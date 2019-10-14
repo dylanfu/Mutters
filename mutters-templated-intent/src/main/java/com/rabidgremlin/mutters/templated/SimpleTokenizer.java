@@ -59,13 +59,15 @@ public class SimpleTokenizer implements Tokenizer
       if ((token.indexOf('.') != -1 || token.startsWith("-")) && isNumeric(token))
       {
         applyStriping = false;
-      } else
+      }
+      else
       {
         // is it a $ value ?
         if (token.startsWith("$") && isNumeric(token.substring(1)))
         {
           applyStriping = false;
-        } else
+        }
+        else
         {
           // is it an email address ?
           if (token.indexOf('@') != -1)
@@ -78,7 +80,8 @@ public class SimpleTokenizer implements Tokenizer
             {
               applyStriping = false;
             }
-          } else
+          }
+          else
           {
             // is it a templated utterance tag ?
             if (token.startsWith("{") && token.endsWith("}"))
@@ -118,7 +121,8 @@ public class SimpleTokenizer implements Tokenizer
     try
     {
       Double.parseDouble(str);
-    } catch (NumberFormatException nfe)
+    }
+    catch (NumberFormatException nfe)
     {
       return false;
     }

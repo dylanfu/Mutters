@@ -111,7 +111,8 @@ class TestCase implements Runnable
         assertThat(response, is(notNullValue()));
         assertThat(response.getResponse(), is(pair.getValue()));
       }
-    } catch (BotException e)
+    }
+    catch (BotException e)
     {
       e.printStackTrace();
     }

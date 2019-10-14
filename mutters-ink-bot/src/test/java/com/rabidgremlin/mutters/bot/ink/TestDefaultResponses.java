@@ -29,7 +29,7 @@ public class TestDefaultResponses
   private InkBot<BotWithDefaultDefaultResponses> testBotWithDefaultDefaultPhrases;
   private InkBot<BotWithDefaultDefaultResponses> testBotWithTestDefaultPhrases;
 
-  class BotWithDefaultDefaultResponses implements InkBotConfiguration
+  static class BotWithDefaultDefaultResponses implements InkBotConfiguration
   {
 
     @Override
@@ -72,7 +72,7 @@ public class TestDefaultResponses
     }
   }
 
-  class BotWithTestDefaultResponses extends BotWithDefaultDefaultResponses
+  static class BotWithTestDefaultResponses extends BotWithDefaultDefaultResponses
   {
     @Override
     public RepromptGenerator getRepromptGenerator()
@@ -81,7 +81,7 @@ public class TestDefaultResponses
     }
   }
 
-  class TestBot extends InkBot<BotWithDefaultDefaultResponses>
+  static class TestBot extends InkBot<BotWithDefaultDefaultResponses>
   {
     public TestBot(BotWithDefaultDefaultResponses configuration)
     {

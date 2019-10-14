@@ -74,7 +74,8 @@ public class TemplatedUtterance
         String slotName = token.substring(1, token.length() - 1);
         templateParts[i] = new MatchPart(PartType.SLOT, slotName);
         slotNames.add(slotName);
-      } else
+      }
+      else
       {
         templateParts[i] = new MatchPart(PartType.SIMPLE, token);
       }
@@ -117,7 +118,8 @@ public class TemplatedUtterance
       if (slotMatch != null)
       {
         theMatch.getSlotMatches().put(slot, slotMatch);
-      } else
+      }
+      else
       {
         return new TemplatedUtteranceMatch(false);
       }
@@ -133,7 +135,8 @@ public class TemplatedUtterance
     {
       // we have matched all parts, make sure there are no tokens remaining
       return tokenIndex == tokens.length;
-    } else if ((tokens.length - tokenIndex) < (parts.length - partIndex))
+    }
+    else if ((tokens.length - tokenIndex) < (parts.length - partIndex))
     {
       // there are not enough tokens left to match all the remaining parts
       return false;
@@ -146,7 +149,8 @@ public class TemplatedUtterance
         if (part.value.equalsIgnoreCase(tokens[tokenIndex]))
         {
           return match(tokens, tokenIndex + 1, parts, partIndex + 1, slotMatches);
-        } else
+        }
+        else
         {
           return false;
         }

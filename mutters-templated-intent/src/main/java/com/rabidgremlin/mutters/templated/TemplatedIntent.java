@@ -104,7 +104,7 @@ public class TemplatedIntent extends Intent
           for (Slot slot : slots.getSlots())
           {
             // does slot have default value and no match ?
-            if (slot instanceof DefaultValueSlot && !matchedSlots.containsKey(slot))
+            if (!matchedSlots.containsKey(slot) && slot instanceof DefaultValueSlot)
             {
               // yep create a slot match with default value
               Object defaultValue = ((DefaultValueSlot) slot).getDefaultValue();

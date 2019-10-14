@@ -152,15 +152,15 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
     CurrentResponse currentResponse = new CurrentResponse();
 
     // preserve hint if we had reprompt hint
-    currentResponse.setHint(SessionUtils.getRepromptHint(session));
+    currentResponse.setHint(InkBotSessionUtils.getRepromptHint(session));
 
     // preserve quick replies if we had them
-    currentResponse.setResponseQuickReplies(SessionUtils.getRepromptQuickReplies(session));
+    currentResponse.setResponseQuickReplies(InkBotSessionUtils.getRepromptQuickReplies(session));
 
     // keep hold of matched intent for logging and debug
     String matchedIntent = null;
 
-    int failedToUnderstandCount = SessionUtils.getFailedToUnderstandCount(session);
+    int failedToUnderstandCount = InkBotSessionUtils.getFailedToUnderstandCount(session);
     log.debug("current failed count is {}", failedToUnderstandCount);
 
     try
@@ -176,7 +176,8 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
           story = new StoryDecorator(inkStoryJson);
           threadLocalStoryMap.get().put(inkStoryJson, story);
         }
-      } else
+      }
+      else
       {
         story.resetState();
       }
@@ -185,7 +186,7 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       afterStoryCreated(story);
 
       // restore the story state
-      SessionUtils.loadInkStoryState(session, story, inkStoryJson);
+      InkBotSessionUtils.loadInkStoryState(session, story, inkStoryJson);
 
       // call hook so additional things can be applied to story after state has been
       // restored
@@ -230,7 +231,8 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
           story.choosePathString(knotName);
           getResponseText(session, currentResponse, story, intentMatch, preText);
           foundMatch = true;
-        } else
+        }
+        else
         {
           // loop through choices find the one that matches intent
           if (story.getCurrentChoices().size() > 0)
@@ -261,12 +263,14 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
           failedToUnderstandCount = 0;
 
           setRepromptInSession(currentResponse, session);
-        } else
+        }
+        else
         {
           // found intent but did not match global or choice so increment fail count
           failedToUnderstandCount += 1;
         }
-      } else
+      }
+      else
       {
         // did not find intent so increment fail account
         failedToUnderstandCount += 1;
@@ -291,10 +295,10 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       }
 
       // save failed count
-      SessionUtils.setFailedToUnderstandCount(session, failedToUnderstandCount);
+      InkBotSessionUtils.setFailedToUnderstandCount(session, failedToUnderstandCount);
 
       // save current story state
-      SessionUtils.saveInkStoryState(session, story, inkStoryJson);
+      InkBotSessionUtils.saveInkStoryState(session, story, inkStoryJson);
 
       // does story have any more choices ?
       if (story.getCurrentChoices().size() == 0)
@@ -309,7 +313,7 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       if (currentResponse.getResponseText() == null)
       {
         // set response as saved reprompt
-        currentResponse.setResponseText(SessionUtils.getReprompt(session));
+        currentResponse.setResponseText(InkBotSessionUtils.getReprompt(session));
 
         // still no response ?
         if (currentResponse.getResponseText() == null)
@@ -317,14 +321,15 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
           currentResponse = repromptGenerator.generateReprompt(session, context, messageText, intentMatch,
               currentResponse);
         }
-      } else
+      }
+      else
       {
         // is this the response a question?
         if (currentResponse.isAskResponse())
         {
           // save the text of the last prompt in the session in case we need it for future
           // processing such as during reprompt generation
-          SessionUtils.setLastPrompt(session, currentResponse.getResponseText());
+          InkBotSessionUtils.setLastPrompt(session, currentResponse.getResponseText());
         }
       }
 
@@ -332,7 +337,8 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       return new IntentBotResponse(currentResponse.getResponseText(), currentResponse.getHint(),
           currentResponse.isAskResponse(), currentResponse.getResponseAttachments(),
           currentResponse.getResponseQuickReplies(), intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
-    } catch (Exception e)
+    }
+    catch (Exception e)
     {
       throw new BotException("Unexpected error", e);
     }
@@ -342,11 +348,11 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
   {
     if (currentResponse.getReprompt() != null)
     {
-      SessionUtils.setReprompt(session, currentResponse.getReprompt());
+      InkBotSessionUtils.setReprompt(session, currentResponse.getReprompt());
     }
 
-    SessionUtils.setRepromptHint(session, currentResponse.getHint());
-    SessionUtils.setRepromptQuickReplies(session, currentResponse.getResponseQuickReplies());
+    InkBotSessionUtils.setRepromptHint(session, currentResponse.getHint());
+    InkBotSessionUtils.setRepromptQuickReplies(session, currentResponse.getResponseQuickReplies());
   }
 
   private void setSlotValuesInInk(Collection<SlotMatch> slotMatches, Story story) throws Exception
@@ -356,7 +362,8 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       if (slotMatch.getValue() instanceof Number)
       {
         story.getVariablesState().set(slotMatch.getSlot().getName().toLowerCase(), slotMatch.getValue());
-      } else
+      }
+      else
       {
         story.getVariablesState().set(slotMatch.getSlot().getName().toLowerCase(), slotMatch.getValue().toString());
       }
@@ -467,11 +474,13 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       if (function != null)
       {
         function.execute(currentResponse, session, intentMatch, story, param);
-      } else
+      }
+      else
       {
         log.warn("Did not find function named {}", functionName);
       }
-    } else
+    }
+    else
     {
       response.append(line);
     }

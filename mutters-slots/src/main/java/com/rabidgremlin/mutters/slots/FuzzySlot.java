@@ -72,7 +72,8 @@ public class FuzzySlot extends Slot
     if (bestMatchScore > tolerance && bestMatch != null)
     {
       return new SlotMatch(this, token, bestMatch);
-    } else
+    }
+    else
     {
       return null;
     }

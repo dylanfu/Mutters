@@ -106,13 +106,15 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration> im
         {
           session.reset();
           askResponse = false;
-        } else
+        }
+        else
         {
           if (reprompt != null)
           {
             SessionUtils.setReprompt(session, reprompt);
             SessionUtils.setRepromptHint(session, hint);
-          } else
+          }
+          else
           {
             SessionUtils.setReprompt(session, defaultResponse + " " + responseText);
             SessionUtils.setRepromptHint(session, null);
@@ -122,7 +124,8 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration> im
 
       return new IntentBotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies,
           intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
-    } catch (IllegalStateException e)
+    }
+    catch (IllegalStateException e)
     {
       throw new BotException("Hit illegal state", e);
     }
