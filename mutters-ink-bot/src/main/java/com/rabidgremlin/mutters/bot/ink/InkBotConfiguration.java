@@ -121,7 +121,7 @@ public interface InkBotConfiguration
   }
 
   /**
-   * This should return a reprompt generator that will be sued by the bot to
+   * This should return a reprompt generator that will be used by the bot to
    * generate a reprompt if it doesn't understand what the user said. This is only
    * used if no reprompt has been defined by a SET_REPROMPT ink function.
    * 

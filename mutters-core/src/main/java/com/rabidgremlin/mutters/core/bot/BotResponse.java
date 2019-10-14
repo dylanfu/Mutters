@@ -8,7 +8,7 @@ import java.util.List;
  * This class holds a response from a bot.
  * 
  * Apart from the response text the bot can also return hints, attachments (for
- * rich responses) and debug values.
+ * rich responses) and quick replies.
  * 
  * @author rabidgremlin
  *

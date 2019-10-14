@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class holds the details of an intent match. Has a constructor to support
- * a "no match".
+ * This class holds the details of an intent match.
  * 
  * @author rabidgremlin
  *

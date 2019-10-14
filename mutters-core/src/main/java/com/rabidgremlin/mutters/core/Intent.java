@@ -13,6 +13,7 @@ import java.util.Collections;
  */
 public class Intent
 {
+  /** Intent used to indicate no match. */
   public final static Intent NONE = new Intent("NONE");
 
   /** The name of the intent. */

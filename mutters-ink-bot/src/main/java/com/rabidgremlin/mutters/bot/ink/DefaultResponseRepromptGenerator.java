@@ -7,18 +7,38 @@ import com.rabidgremlin.mutters.core.Context;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.session.Session;
 
+/**
+ * A ResponseGenerator that uses a list of reprompts to tell the user that the
+ * bot didn't understand them. Will pick a random phrase from the supplied list.
+ * If in the bot was in the middle of a conversation than the last query will be
+ * appended to the phrase.
+ * 
+ * @author jack
+ *
+ */
 public class DefaultResponseRepromptGenerator implements RepromptGenerator
 {
+  /** The list of phrases. */
   private String[] defaultResponses;
 
   /** Random for default reponses. */
   private Random rand = new Random();
 
+  /**
+   * Creates the DefaultResponseRepromptGenerator with a generic "Pardon?" phrase.
+   * 
+   */
   public DefaultResponseRepromptGenerator()
   {
     this.defaultResponses = new String[] { "Pardon?" };
   }
 
+  /**
+   * Creates the DefaultResponseRepromptGenerator with the supplied list of
+   * phrases.
+   * 
+   * @param defaultResponses The list of phrases to use as reprompts.
+   */
   public DefaultResponseRepromptGenerator(String[] defaultResponses)
   {
     this.defaultResponses = defaultResponses.clone();
