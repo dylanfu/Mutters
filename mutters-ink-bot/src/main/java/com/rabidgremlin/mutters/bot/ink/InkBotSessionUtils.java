@@ -13,6 +13,9 @@ import com.rabidgremlin.mutters.core.session.Session;
  */
 public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.SessionUtils
 {
+  private static final String STORY_LENGTH_SUFFIX = "0987654321STORYJSONLENGTH1234567890";
+  private static final String STORY_STATE_SUFFIX = "0987654321STORYSTATE1234567890";
+  private static final String FAILED_COUNT_SUFFIX = "0987654321FAILEDCOUNT1234567890";
 
   protected InkBotSessionUtils()
   {
@@ -27,7 +30,7 @@ public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.Sessi
    */
   public static void setFailedToUnderstandCount(Session session, int count)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321FAILEDCOUNT1234567890", Integer.valueOf(count));
+    session.setAttribute(SLOT_PREFIX + FAILED_COUNT_SUFFIX, Integer.valueOf(count));
   }
 
   /**
@@ -38,7 +41,7 @@ public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.Sessi
    */
   public static int getFailedToUnderstandCount(Session session)
   {
-    Integer failedToUnderstandCount = (Integer) session.getAttribute(SLOT_PREFIX + "0987654321FAILEDCOUNT1234567890");
+    Integer failedToUnderstandCount = (Integer) session.getAttribute(SLOT_PREFIX + FAILED_COUNT_SUFFIX);
 
     if (failedToUnderstandCount == null)
     {
@@ -69,9 +72,9 @@ public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.Sessi
 
     try
     {
-      session.setAttribute(SLOT_PREFIX + "0987654321STORYSTATE1234567890", storyState.toJson());
+      session.setAttribute(SLOT_PREFIX + STORY_STATE_SUFFIX, storyState.toJson());
       // save length of story JSON and use as a crude version check
-      session.setAttribute(SLOT_PREFIX + "0987654321STORYJSONLENGTH1234567890", Integer.valueOf(storyJson.length()));
+      session.setAttribute(SLOT_PREFIX + STORY_LENGTH_SUFFIX, Integer.valueOf(storyJson.length()));
     }
     catch (Exception e)
     {
@@ -93,8 +96,8 @@ public class InkBotSessionUtils extends com.rabidgremlin.mutters.core.util.Sessi
 
     try
     {
-      Integer storyJsonLength = (Integer) session.getAttribute(SLOT_PREFIX + "0987654321STORYJSONLENGTH1234567890");
-      String stateJson = (String) session.getAttribute(SLOT_PREFIX + "0987654321STORYSTATE1234567890");
+      Integer storyJsonLength = (Integer) session.getAttribute(SLOT_PREFIX + STORY_LENGTH_SUFFIX);
+      String stateJson = (String) session.getAttribute(SLOT_PREFIX + STORY_STATE_SUFFIX);
 
       if (stateJson != null)
       {

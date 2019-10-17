@@ -20,11 +20,19 @@ import com.rabidgremlin.mutters.core.session.Session;
  */
 public class SessionUtils
 {
-  /** Logger. */
-  private static final Logger LOG = LoggerFactory.getLogger(SessionUtils.class);
-
   /** Prefix for slot values stored in session to avoid any name collisions. */
   public static final String SLOT_PREFIX = "SLOT_JLA1974_";
+
+  private static final String LAST_PROMPT_SUFFIX = "0987654321LASTPROMPT1234567890";
+
+  private static final String REPROMPT_HINT_SUFFIX = "0987654321REPROMPTHINT1234567890";
+
+  private static final String REPROMPT_QUICK_REPLIES_SUFFIX = "0987654321REPROMPTQUICKREPLIES1234567890";
+
+  private static final String REPROMPT_SUFFIX = "0987654321REPROMPT1234567890";
+
+  /** Logger. */
+  private static final Logger LOG = LoggerFactory.getLogger(SessionUtils.class);
 
   protected SessionUtils()
   {
@@ -50,7 +58,7 @@ public class SessionUtils
    */
   public static void setReprompt(Session session, String reprompt)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321REPROMPT1234567890", reprompt);
+    session.setAttribute(SLOT_PREFIX + REPROMPT_SUFFIX, reprompt);
   }
 
   /**
@@ -61,7 +69,7 @@ public class SessionUtils
    */
   public static String getReprompt(Session session)
   {
-    return (String) session.getAttribute(SLOT_PREFIX + "0987654321REPROMPT1234567890");
+    return (String) session.getAttribute(SLOT_PREFIX + REPROMPT_SUFFIX);
   }
 
   /**
@@ -72,7 +80,7 @@ public class SessionUtils
    */
   public static void setRepromptQuickReplies(Session session, List<String> repromptQuickReplies)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321REPROMPTQUICKREPLIES1234567890", repromptQuickReplies);
+    session.setAttribute(SLOT_PREFIX + REPROMPT_QUICK_REPLIES_SUFFIX, repromptQuickReplies);
   }
 
   /**
@@ -84,7 +92,7 @@ public class SessionUtils
   @SuppressWarnings("unchecked")
   public static List<String> getRepromptQuickReplies(Session session)
   {
-    return (List<String>) session.getAttribute(SLOT_PREFIX + "0987654321REPROMPTQUICKREPLIES1234567890");
+    return (List<String>) session.getAttribute(SLOT_PREFIX + REPROMPT_QUICK_REPLIES_SUFFIX);
   }
 
   /**
@@ -95,7 +103,7 @@ public class SessionUtils
    */
   public static void setRepromptHint(Session session, String repromptHint)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321REPROMPTHINT1234567890", repromptHint);
+    session.setAttribute(SLOT_PREFIX + REPROMPT_HINT_SUFFIX, repromptHint);
   }
 
   /**
@@ -106,7 +114,7 @@ public class SessionUtils
    */
   public static String getRepromptHint(Session session)
   {
-    return (String) session.getAttribute(SLOT_PREFIX + "0987654321REPROMPTHINT1234567890");
+    return (String) session.getAttribute(SLOT_PREFIX + REPROMPT_HINT_SUFFIX);
   }
 
   /**
@@ -387,7 +395,7 @@ public class SessionUtils
    */
   public static void setLastPrompt(Session session, String lastPrompt)
   {
-    session.setAttribute(SLOT_PREFIX + "0987654321LASTPROMPT1234567890", lastPrompt);
+    session.setAttribute(SLOT_PREFIX + LAST_PROMPT_SUFFIX, lastPrompt);
   }
 
   /**
@@ -398,6 +406,6 @@ public class SessionUtils
    */
   public static String getLastPrompt(Session session)
   {
-    return (String) session.getAttribute(SLOT_PREFIX + "0987654321LASTPROMPT1234567890");
+    return (String) session.getAttribute(SLOT_PREFIX + LAST_PROMPT_SUFFIX);
   }
 }
