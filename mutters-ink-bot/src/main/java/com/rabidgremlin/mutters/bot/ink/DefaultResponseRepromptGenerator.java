@@ -1,6 +1,7 @@
 /* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.bot.ink;
 
+import java.util.List;
 import java.util.Random;
 
 import com.rabidgremlin.mutters.core.Context;
@@ -42,6 +43,17 @@ public class DefaultResponseRepromptGenerator implements RepromptGenerator
   public DefaultResponseRepromptGenerator(String[] defaultResponses)
   {
     this.defaultResponses = defaultResponses.clone();
+  }
+
+  /**
+   * Creates the DefaultResponseRepromptGenerator with the supplied list of
+   * phrases.
+   * 
+   * @param defaultResponses The list of phrases to use as reprompts.
+   */
+  public DefaultResponseRepromptGenerator(List<String> defaultResponses)
+  {
+    this.defaultResponses = defaultResponses.toArray(new String[0]);
   }
 
   @Override
