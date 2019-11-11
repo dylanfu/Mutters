@@ -3,6 +3,7 @@ package com.rabidgremlin.mutters.core;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.OptionalDouble;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -84,15 +85,15 @@ public class MatcherScores
    * 
    * @return Returns the nest score or null if no scores.
    */
-  public Double getBestScore()
+  public OptionalDouble getBestScore()
   {
     if (scores.size() > 0)
     {
-      return scores.lastKey();
+      return OptionalDouble.of(scores.lastKey());
     }
     else
     {
-      return null;
+      return OptionalDouble.empty();
     }
   }
 

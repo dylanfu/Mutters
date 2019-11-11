@@ -2,8 +2,9 @@
 package com.rabidgremlin.mutters.core;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+
+import java.util.OptionalDouble;
 
 import org.junit.Test;
 
@@ -25,13 +26,13 @@ public class TestMatcherScores
   {
     MatcherScores scores = new MatcherScores();
 
-    assertThat(scores.getBestScore(), is(nullValue()));
+    assertThat(scores.getBestScore(), is(OptionalDouble.empty()));
 
     scores.addScore("TestIntent", 0.56);
     scores.addScore("TestIntent2", 0.16);
     scores.addScore("TestIntent3", 0.99);
 
-    assertThat(scores.getBestScore(), is(0.99));
+    assertThat(scores.getBestScore().getAsDouble(), is(0.99));
   }
 
   @Test
@@ -39,7 +40,7 @@ public class TestMatcherScores
   {
     MatcherScores scores = new MatcherScores();
 
-    assertThat(scores.getBestScore(), is(nullValue()));
+    assertThat(scores.getBestScore(), is(OptionalDouble.empty()));
 
     scores.addScore("TestIntent", 0.56);
     scores.addScore("TestIntent3", 0.16);
@@ -54,7 +55,7 @@ public class TestMatcherScores
   {
     MatcherScores scores = new MatcherScores();
 
-    assertThat(scores.getBestScore(), is(nullValue()));
+    assertThat(scores.getBestScore(), is(OptionalDouble.empty()));
 
     scores.addScore("TestIntent2", 0.16);
     scores.addScore("TestIntent3", 0.16);
