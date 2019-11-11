@@ -1,6 +1,8 @@
 /* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core;
 
+import java.util.Objects;
+
 /**
  * A Slot that is a combination of two other slots. Useful if you need different
  * approaches for matching a slot. Class will stop on the match returned by a
@@ -29,9 +31,9 @@ public class CompoundSlot extends Slot
    */
   public CompoundSlot(String name, Slot firstSlot, Slot secondSlot)
   {
-    this.name = name;
-    this.firstSlot = firstSlot;
-    this.secondSlot = secondSlot;
+    this.name = Objects.requireNonNull(name);
+    this.firstSlot = Objects.requireNonNull(firstSlot);
+    this.secondSlot = Objects.requireNonNull(secondSlot);
   }
 
   /*

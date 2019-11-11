@@ -1,6 +1,7 @@
 /* Licensed under Apache-2.0 */
 package com.rabidgremlin.mutters.core;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,8 +29,8 @@ public class CompoundIntentMatcher implements IntentMatcher
    */
   public CompoundIntentMatcher(IntentMatcher firstMatcher, IntentMatcher secondMatcher)
   {
-    this.firstMatcher = firstMatcher;
-    this.secondMatcher = secondMatcher;
+    this.firstMatcher = Objects.requireNonNull(firstMatcher);
+    this.secondMatcher = Objects.requireNonNull(secondMatcher);
   }
 
   /*

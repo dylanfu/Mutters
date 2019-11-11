@@ -3,6 +3,7 @@ package com.rabidgremlin.mutters.core;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class holds the details of an intent match.
@@ -38,10 +39,10 @@ public class IntentMatch
   public IntentMatch(Intent intent, Map<Slot, SlotMatch> slotMatches, String utterance, MatcherScores matcherScores)
   {
 
-    this.intent = intent;
-    this.slotMatches = slotMatches;
-    this.utterance = utterance;
-    this.matcherScores = matcherScores;
+    this.intent = Objects.requireNonNull(intent);
+    this.slotMatches = Objects.requireNonNull(slotMatches);
+    this.utterance = Objects.requireNonNull(utterance);
+    this.matcherScores = Objects.requireNonNull(matcherScores);
   }
 
   /**

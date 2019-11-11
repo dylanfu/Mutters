@@ -2,6 +2,7 @@
 package com.rabidgremlin.mutters.core;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -35,7 +36,7 @@ public class MatcherScores
    */
   public MatcherScores(SortedMap<Double, SortedSet<String>> scores)
   {
-    this.scores = scores;
+    this.scores = Objects.requireNonNull(scores);
   }
 
   /**

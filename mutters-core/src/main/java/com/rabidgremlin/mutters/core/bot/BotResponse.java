@@ -3,6 +3,7 @@ package com.rabidgremlin.mutters.core.bot;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class holds a response from a bot.
@@ -43,7 +44,7 @@ public class BotResponse
   public BotResponse(String response, String hint, boolean askResponse, List<BotResponseAttachment> attachments,
       List<String> quickReplies)
   {
-    this.response = response;
+    this.response = Objects.requireNonNull(response);
     this.hint = hint;
     this.askResponse = askResponse;
     this.attachments = attachments;

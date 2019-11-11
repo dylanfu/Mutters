@@ -4,6 +4,7 @@ package com.rabidgremlin.mutters.core.bot;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class holds the details of an attachment to a response. Attachments can
@@ -30,8 +31,7 @@ public class BotResponseAttachment
    */
   public BotResponseAttachment(String type)
   {
-    super();
-    this.type = type;
+    this.type = Objects.requireNonNull(type);
   }
 
   /**

@@ -3,6 +3,7 @@ package com.rabidgremlin.mutters.core;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * This class represents an intent. Each intent has a unique name and zero or
@@ -29,7 +30,7 @@ public class Intent
    */
   public Intent(String name)
   {
-    this.name = name;
+    this.name = Objects.requireNonNull(name);
   }
 
   /**

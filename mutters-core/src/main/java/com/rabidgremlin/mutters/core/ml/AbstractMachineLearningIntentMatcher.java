@@ -4,6 +4,7 @@ package com.rabidgremlin.mutters.core.ml;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -88,8 +89,8 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
   {
     this.minMatchScore = minMatchScore;
     this.maybeMatchScore = maybeMatchScore;
-    this.tokenizer = tokenizer;
-    this.slotMatcher = slotMatcher;
+    this.tokenizer = Objects.requireNonNull(tokenizer);
+    this.slotMatcher = Objects.requireNonNull(slotMatcher);
   }
 
   /**

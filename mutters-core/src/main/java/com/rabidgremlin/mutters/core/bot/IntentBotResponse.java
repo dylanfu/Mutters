@@ -2,6 +2,7 @@
 package com.rabidgremlin.mutters.core.bot;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.MatcherScores;
@@ -37,8 +38,8 @@ public class IntentBotResponse extends BotResponse
       List<String> quickReplies, Intent matchedIntent, MatcherScores matchingScores)
   {
     super(response, hint, askResponse, attachments, quickReplies);
-    this.matchedIntent = matchedIntent;
-    this.matchingScores = matchingScores;
+    this.matchedIntent = Objects.requireNonNull(matchedIntent);
+    this.matchingScores = Objects.requireNonNull(matchingScores);
   }
 
   /**
