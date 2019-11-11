@@ -13,7 +13,7 @@ import com.rabidgremlin.mutters.core.session.Session;
  */
 public interface IntentBot extends Bot
 {
-  /** @See {@link Bot#respond(Session, Context, String)} */
+  /** See {@link Bot#respond(Session, Context, String)} */
   @Override
   IntentBotResponse respond(Session session, Context context, String messageText) throws BotException;
 }
