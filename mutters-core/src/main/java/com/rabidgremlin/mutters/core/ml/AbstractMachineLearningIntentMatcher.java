@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -128,7 +129,7 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
 
     String[] utteranceTokens = tokenizer.tokenize(utterance);
 
-    SortedMap<Double, Set<String>> scoredCats = generateSortedScoreMap(utteranceTokens);
+    SortedMap<Double, SortedSet<String>> scoredCats = generateSortedScoreMap(utteranceTokens);
     log.debug("Sorted scores were: {}", scoredCats);
 
     double bestScore = 0;
@@ -266,7 +267,7 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
 
   }
 
-  private Double calcScoreDifference(SortedMap<Double, Set<String>> scoredCats)
+  private Double calcScoreDifference(SortedMap<Double, SortedSet<String>> scoredCats)
   {
     if (scoredCats.size() < 2)
     {
@@ -279,5 +280,5 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
     return new Double(score1 - score2);
   }
 
-  protected abstract SortedMap<Double, Set<String>> generateSortedScoreMap(String[] utteranceTokens);
+  protected abstract SortedMap<Double, SortedSet<String>> generateSortedScoreMap(String[] utteranceTokens);
 }

@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 import org.junit.Test;
 
@@ -155,7 +155,9 @@ public class TestIntentMatcher
 
     intent.addUtterance("My favourite color is {Color}");
     intent.addUtterance("{Color} is my favourite");
-    intent.addUtterance("I have a favourite color"); // utterance without a slot, should default to Black
+    intent.addUtterance("I have a favourite color"); // utterance without a
+                                                     // slot, should default to
+                                                     // Black
 
     IntentMatch intentMatch = matcher.match("My favourite color is green", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
@@ -197,7 +199,7 @@ public class TestIntentMatcher
 
     // check that we got a scores
     assertThat(intentMatch.getMatcherScores(), is(notNullValue()));
-    SortedMap<Double, Set<String>> scores = intentMatch.getMatcherScores().getScores();
+    SortedMap<Double, SortedSet<String>> scores = intentMatch.getMatcherScores().getScores();
 
     // we should only have one score
     assertThat(scores.keySet().size(), is(1));

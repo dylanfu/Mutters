@@ -4,6 +4,9 @@ package com.rabidgremlin.mutters.opennlp.intent;
 import java.net.URL;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
@@ -95,10 +98,16 @@ public class OpenNLPIntentMatcher extends AbstractMachineLearningIntentMatcher
   }
 
   @Override
-  protected SortedMap<Double, Set<String>> generateSortedScoreMap(String[] utteranceTokens)
+  protected SortedMap<Double, SortedSet<String>> generateSortedScoreMap(String[] utteranceTokens)
   {
     DocumentCategorizerME intentCategorizer = new DocumentCategorizerME(model);
-    return intentCategorizer.sortedScoreMap(utteranceTokens);
+    SortedMap<Double, Set<String>> scores = intentCategorizer.sortedScoreMap(utteranceTokens);
+
+    // convert to sorted set of intents
+    SortedMap<Double, SortedSet<String>> sortedScores = new TreeMap<Double, SortedSet<String>>();
+    scores.forEach((score, intents) -> sortedScores.put(score, new TreeSet<>(intents)));
+
+    return sortedScores;
   }
 
 }

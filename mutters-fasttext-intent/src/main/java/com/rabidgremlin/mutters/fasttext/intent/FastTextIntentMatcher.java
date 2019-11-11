@@ -5,11 +5,11 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -119,12 +119,12 @@ public class FastTextIntentMatcher extends AbstractMachineLearningIntentMatcher
   }
 
   @Override
-  protected SortedMap<Double, Set<String>> generateSortedScoreMap(String[] utteranceTokens)
+  protected SortedMap<Double, SortedSet<String>> generateSortedScoreMap(String[] utteranceTokens)
   {
     // get the first 10 labels
     List<JFastText.ProbLabel> probLabels = jft.predictProba(StringUtils.join(utteranceTokens, " "), 10);
 
-    SortedMap<Double, Set<String>> scoreMap = new TreeMap<Double, Set<String>>();
+    SortedMap<Double, SortedSet<String>> scoreMap = new TreeMap<Double, SortedSet<String>>();
 
     // populate the scor map
     for (JFastText.ProbLabel probLabel : probLabels)
@@ -134,7 +134,7 @@ public class FastTextIntentMatcher extends AbstractMachineLearningIntentMatcher
       // strip off the __label__
       String label = probLabel.label.substring("__label__".length());
 
-      Set<String> labels = new HashSet<>();
+      SortedSet<String> labels = new TreeSet<>();
       labels.add(label);
       scoreMap.put(score, labels);
     }
