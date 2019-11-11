@@ -47,7 +47,7 @@ public class CompoundIntentMatcher implements IntentMatcher
     IntentMatch match = firstMatcher.match(utterance, context, expectedIntents);
 
     // no ? try second one
-    if (match.matched())
+    if (!match.matched())
     {
       match = secondMatcher.match(utterance, context, expectedIntents);
     }
