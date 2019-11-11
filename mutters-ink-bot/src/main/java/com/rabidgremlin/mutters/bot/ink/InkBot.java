@@ -336,7 +336,7 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       // build and return response
       return new IntentBotResponse(currentResponse.getResponseText(), currentResponse.getHint(),
           currentResponse.isAskResponse(), currentResponse.getResponseAttachments(),
-          currentResponse.getResponseQuickReplies(), intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
+          currentResponse.getResponseQuickReplies(), intentMatch.getIntent(), intentMatch.getMatcherScores());
     }
     catch (Exception e)
     {

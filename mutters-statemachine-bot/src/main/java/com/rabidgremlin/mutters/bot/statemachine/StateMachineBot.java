@@ -123,7 +123,7 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration> im
       }
 
       return new IntentBotResponse(responseText, hint, askResponse, responseAttachments, responseQuickReplies,
-          intentMatch.getIntent().getName(), intentMatch.getMatcherScores());
+          intentMatch.getIntent(), intentMatch.getMatcherScores());
     }
     catch (IllegalStateException e)
     {

@@ -41,7 +41,7 @@ public class TestMatchingDataIsSet
 
     assertThat(response, is(notNullValue()));
     assertThat(response.getMatchedIntent(), is(notNullValue()));
-    assertThat(response.getMatchedIntent(), is("OrderTaxi"));
+    assertThat(response.getMatchedIntent().getName(), is("OrderTaxi"));
 
     MatcherScores matchingScores = response.getMatchingScores();
 
