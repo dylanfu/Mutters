@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.rabidgremlin.mutters.core.Context;
-import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.templated.SimpleTokenizer;
 import com.rabidgremlin.mutters.templated.TemplatedIntent;
@@ -72,6 +71,6 @@ public class TestTemplatedIntentFiltering
     intentMatch = matcher.match("bye", new Context(), expectedIntents);
 
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
   }
 }

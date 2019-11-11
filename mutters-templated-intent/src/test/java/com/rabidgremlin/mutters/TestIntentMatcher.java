@@ -12,7 +12,6 @@ import java.util.SortedSet;
 import org.junit.Test;
 
 import com.rabidgremlin.mutters.core.Context;
-import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.SlotMatch;
 import com.rabidgremlin.mutters.slots.CustomSlot;
@@ -73,7 +72,7 @@ public class TestIntentMatcher
     IntentMatch intentMatch = matcher.match("book this flight", new Context(), null);
 
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
   }
 
   @Test
@@ -90,7 +89,7 @@ public class TestIntentMatcher
     IntentMatch intentMatch = matcher.match("next friday", new Context(), null);
 
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
   }
 
   @Test
@@ -109,23 +108,23 @@ public class TestIntentMatcher
 
     intentMatch = matcher.match("", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
 
     intentMatch = matcher.match(" ", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
 
     intentMatch = matcher.match("?", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
 
     intentMatch = matcher.match("...", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
 
     intentMatch = matcher.match(" ?", new Context(), null);
     assertThat(intentMatch, is(notNullValue()));
-    assertThat(intentMatch.getIntent(), is(Intent.NONE));
+    assertThat(intentMatch.matched(), is(false));
   }
 
   // slot that matches a colour or defaults to black

@@ -24,7 +24,6 @@ import com.rabidgremlin.mutters.bot.ink.functions.SetHintFunction;
 import com.rabidgremlin.mutters.bot.ink.functions.SetLongTermAttributeFunction;
 import com.rabidgremlin.mutters.bot.ink.functions.SetRepromptFunction;
 import com.rabidgremlin.mutters.core.Context;
-import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
 import com.rabidgremlin.mutters.core.SlotMatch;
@@ -208,7 +207,7 @@ public abstract class InkBot<T extends InkBotConfiguration> implements IntentBot
       // match the intents
       IntentMatch intentMatch = matcher.match(messageText, context, expectedIntents);
 
-      if (intentMatch.getIntent() != Intent.NONE)
+      if (intentMatch.matched())
       {
         // record name of intent we matched on
         matchedIntent = intentMatch.getIntent().getName();

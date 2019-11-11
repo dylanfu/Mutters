@@ -124,7 +124,7 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
     // utterance is blank, nothing to match on
     if (StringUtils.isBlank(utterance))
     {
-      return new NoIntentMatch();
+      return new NoIntentMatch(utterance);
     }
 
     String[] utteranceTokens = tokenizer.tokenize(utterance);
@@ -196,7 +196,7 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
       if (bestCategory == null)
       {
         log.debug("No matches, matching expectedIntents.");
-        return new NoIntentMatch(new MatcherScores(scoredCats));
+        return new NoIntentMatch(utterance, new MatcherScores(scoredCats));
       }
     }
 
@@ -207,7 +207,7 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
     if (bestIntent == null)
     {
       log.warn("Missing MLIntent named {}", bestCategory);
-      return new NoIntentMatch(new MatcherScores(scoredCats));
+      return new NoIntentMatch(utterance, new MatcherScores(scoredCats));
     }
 
     // are we below min score matching ?
@@ -250,12 +250,12 @@ public abstract class AbstractMachineLearningIntentMatcher implements IntentMatc
         else
         {
           log.debug("Score difference between best and next best too low. Skipping maybe intent");
-          return new NoIntentMatch(new MatcherScores(scoredCats));
+          return new NoIntentMatch(utterance, new MatcherScores(scoredCats));
         }
       }
       else
       {
-        return new NoIntentMatch(new MatcherScores(scoredCats));
+        return new NoIntentMatch(utterance, new MatcherScores(scoredCats));
       }
     }
 

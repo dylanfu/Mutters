@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.rabidgremlin.mutters.core.Context;
-import com.rabidgremlin.mutters.core.Intent;
 import com.rabidgremlin.mutters.core.IntentMatch;
 import com.rabidgremlin.mutters.core.IntentMatcher;
 import com.rabidgremlin.mutters.core.bot.BotException;
@@ -93,7 +92,7 @@ public abstract class StateMachineBot<T extends StateMachineBotConfiguration> im
       // TODO: Implement intent filtering via expected intents
       IntentMatch intentMatch = matcher.match(messageText, context, null);
 
-      if (intentMatch.getIntent() != Intent.NONE)
+      if (intentMatch.matched())
       {
         IntentResponse response = stateMachine.trigger(intentMatch, session);
         responseText = response.getResponse();

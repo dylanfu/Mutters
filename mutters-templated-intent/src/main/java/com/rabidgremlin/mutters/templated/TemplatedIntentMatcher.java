@@ -70,7 +70,7 @@ public class TemplatedIntentMatcher implements IntentMatcher
     // utterance is blank, nothing to match on
     if (StringUtils.isBlank(utterance))
     {
-      return new NoIntentMatch();
+      return new NoIntentMatch(utterance);
     }
 
     String[] cleanedUtterance = tokenizer.tokenize(utterance);
@@ -78,7 +78,7 @@ public class TemplatedIntentMatcher implements IntentMatcher
     // do we have some tokens after cleaning ?
     if (cleanedUtterance.length == 0)
     {
-      return new NoIntentMatch();
+      return new NoIntentMatch(utterance);
     }
 
     for (TemplatedIntent intent : intents)
@@ -98,7 +98,7 @@ public class TemplatedIntentMatcher implements IntentMatcher
       }
     }
 
-    return new NoIntentMatch();
+    return new NoIntentMatch(utterance);
   }
 
 }

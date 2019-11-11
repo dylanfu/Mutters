@@ -14,7 +14,7 @@ import java.util.Collections;
 public class Intent
 {
   /** Intent used to indicate no match. */
-  public final static Intent NONE = new Intent("NONE");
+  private final static Intent NONE = new Intent("NONE");
 
   /** The name of the intent. */
   protected String name;
@@ -60,6 +60,16 @@ public class Intent
   public Collection<Slot> getSlots()
   {
     return Collections.unmodifiableCollection(slots.getSlots());
+  }
+
+  /**
+   * Returns the 'none' match intent.
+   * 
+   * @return The 'none' match intent.
+   */
+  public static Intent none()
+  {
+    return NONE;
   }
 
 }
